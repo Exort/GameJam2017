@@ -7,7 +7,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
 {
     public GameOverView GameOverScreenPrefab;
     public GameUI GameUI;
-
+    public SpawnerManager Spawner;
     public List<GameObject> Lanes;
     public PlayerCharacter PlayerPrefab;
     public float PlayerOffset = -2.25f;
@@ -152,6 +152,8 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         switch(method)
         {
             case StateMethod.Enter:
+                Spawner.enabled = true;
+                Spawner.Init();
                 break;
             case StateMethod.Update:
                 {
@@ -159,6 +161,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
                 break;
                 }
             case StateMethod.Exit:
+                Spawner.enabled = false;
                 break;
         }
     }

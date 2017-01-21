@@ -393,6 +393,20 @@ Prefab:
       propertyPath: GameOverScreenPrefab
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 114692312790337460, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114692312790337460, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: Spawner
+      value: 
+      objectReference: {fileID: 1669117693}
+    - target: {fileID: 1927403625675828, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
   m_IsPrefabParent: 0
@@ -402,6 +416,12 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1669117691}
   m_Script: {fileID: 11500000, guid: 4a4d0f43cde6bd5459fe181344eef890, type: 3}
+--- !u!114 &1669117693 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+    type: 2}
+  m_PrefabInternal: {fileID: 1669117691}
+  m_Script: {fileID: 11500000, guid: aa5be195a82d72b4d88753e6f7bfadca, type: 3}
 --- !u!1 &1912202203
 GameObject:
   m_ObjectHideFlags: 0

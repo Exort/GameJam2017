@@ -12,9 +12,14 @@ public class SpawnerManager : MonoBehaviour {
             currentLevel = LevelManager.Instance.getNextLevel();
         }
 	}
-	
-	// Update is called once per frame
-	void Update () {
+    public void Init()
+    {
+        currentLevel = LevelManager.Instance.getNextLevel();
+        
+    }
+    // Update is called once per frame
+    void Update () {
+        
         List<ObjectInstance> objs = currentLevel.GetObjectsToSpawn(Time.deltaTime);
 
         Debug.Log(objs);
