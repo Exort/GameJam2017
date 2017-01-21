@@ -73,7 +73,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
 
     void Awake()
     {
-        fsm.AddState (StateTitle);
+        fsm.AddState(StateTitle);
         fsm.AddState(StateStart);
         fsm.AddState(StateActive);
         fsm.AddState(StateChangeLane);
@@ -114,6 +114,11 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         }
     }
 
+    void FixedUpdate()
+    {
+        fsm.FixedUpdate (Time.deltaTime);
+    }
+
     public void OnMessage(EventType tp, object param)
     {
         if (tp == EventType.StartGame)
@@ -131,13 +136,11 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         gv.Fillout(Score);
     }
 
-    private void ChangeLane(int laneIndex)
+    private void ChangeLane(int laneIndex, bool jump = false)
     {
-        if(laneIndex != CurrentLane)
+        if(PlayerCharacter.CanChangeLane && laneIndex != CurrentLane)
         {
-            var position = PlayerCharacter.transform.position;
-            position.y = Lanes[laneIndex].transform.position.y;
-            PlayerCharacter.transform.position = position;
+            PlayerCharacter.ChangeLane (Lanes [laneIndex].transform.position.y, jump);
             PlayerCharacter.ResetWave();
             CurrentLane = laneIndex;
         }
@@ -180,7 +183,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
                     Level = 1;
 
                     PlayerName = "MTL";
-                PlayerCharacter = Instantiate(PlayerPrefab, new Vector3(PlayerOffset, 0f), Quaternion.identity);
+                    PlayerCharacter = Instantiate(PlayerPrefab, new Vector3(PlayerOffset, 0f), Quaternion.identity);
                     ChangeLane(2);
                     break;
                 }

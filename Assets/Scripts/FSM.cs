@@ -9,6 +9,7 @@ namespace Assets.Scripts
     {
         Enter,
         Update,
+        FixedUpdate,
         Exit
     }
 
@@ -16,8 +17,16 @@ namespace Assets.Scripts
     {
         public delegate void FSMFunction(StateMethod method, float deltaTime);
 
-        private List<FSMFunction> states = new List<FSMFunction>();
         private int currentState = -1;
+        public int CurrentState
+        {
+            get
+            {
+                return currentState;
+            }
+        }
+
+        private List<FSMFunction> states = new List<FSMFunction>();
 
         public void AddState(FSMFunction function)
         {
@@ -41,6 +50,14 @@ namespace Assets.Scripts
             if (currentState != -1)
             {
                 states[currentState].Invoke(StateMethod.Update, deltaTime);
+            }
+        }
+
+        public void FixedUpdate(float deltaTime)
+        {
+            if (currentState != -1)
+            {
+                states[currentState].Invoke(StateMethod.FixedUpdate, deltaTime);
             }
         }
     }
