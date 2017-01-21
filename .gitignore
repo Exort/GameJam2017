@@ -1,1 +1,5 @@
 /Library/
+/.vs/GameJam2017/v14/*.suo
+/Temp
+/GameJam2017.csproj
+/GameJam2017.sln
