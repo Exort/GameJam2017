@@ -48,7 +48,7 @@ public class PlayerCharacter : MonoBehaviour
 
             float step = diff / currentWave.ScreenWaveWidth;
 
-            Debug.Log(string.Format("Step={0}, WaveX={1}, PlayerX={2}, {3}", step, waveX, transform.position.x, diff));
+          //  Debug.Log(string.Format("Step={0}, WaveX={1}, PlayerX={2}, {3}", step, waveX, transform.position.x, diff));
 
             if (diff >= 0f)
             {
@@ -59,7 +59,7 @@ public class PlayerCharacter : MonoBehaviour
             else if ((waveSign < 0 && step > 1f)
                      || (waveSign > 0 && step < 0f))
             {
-                Debug.Log("Leaving wave");
+            //    Debug.Log("Leaving wave");
                 playerBody.position = new Vector2(playerBody.position.x, startY);
                 currentWave = null;
                 playerCollider.enabled = true;
@@ -79,7 +79,7 @@ public class PlayerCharacter : MonoBehaviour
 
                 startY = playerBody.position.y;
 
-                Debug.Log("Entering wave");
+          //      Debug.Log("Entering wave");
             }
         }
     }
