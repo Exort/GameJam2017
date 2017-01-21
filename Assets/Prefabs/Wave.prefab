@@ -90,160 +90,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WaveWidth: 40
   WaveHeight: 18
-  WaveCurves:
-  - serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: -0.008333334
-      value: 0.03124994
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1.1041666
-      value: 0.012499988
-      inSlope: -3.5526316
-      outSlope: -3.5526316
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  - serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: -0.00548079
-      value: 0.026250586
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 0.6456612
-      value: 0.60157967
-      inSlope: 0.7790327
-      outSlope: 0.7790327
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 0.96260375
-      value: 0.9792866
-      inSlope: -1.9027293
-      outSlope: -1.9027293
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1.0708333
-      value: 0.0062500536
-      inSlope: -2.5227256
-      outSlope: -2.5227256
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  - serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: -0.0041666683
-      value: 0.018750004
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-    - serializedVersion: 2
-      time: 0.12909307
-      value: 0.18640368
-      inSlope: 2.0816605
-      outSlope: 2.0816605
-      tangentMode: 136
-    - serializedVersion: 2
-      time: 0.31665924
-      value: 0.6866006
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-    - serializedVersion: 2
-      time: 0.9916666
-      value: 0.0062500015
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-    m_PreInfinity: 0
-    m_PostInfinity: 0
-    m_RotationOrder: 0
-  - serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: -0.004166667
-      value: 0.0062499996
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-    - serializedVersion: 2
-      time: 0.25416666
-      value: 0.43124995
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-    - serializedVersion: 2
-      time: 0.45416665
-      value: 0.037500024
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-    - serializedVersion: 2
-      time: 0.78333336
-      value: 0.78124994
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-    - serializedVersion: 2
-      time: 0.9916667
-      value: 0.024999997
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-    m_PreInfinity: 0
-    m_PostInfinity: 0
-    m_RotationOrder: 0
-  - serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: -0.004166667
-      value: 0.0062499996
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-    - serializedVersion: 2
-      time: 0.36666667
-      value: 0.51874995
-      inSlope: 0.98113173
-      outSlope: 0.98113173
-      tangentMode: 136
-    - serializedVersion: 2
-      time: 0.65833336
-      value: 0.6812499
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-    - serializedVersion: 2
-      time: 0.89166665
-      value: 0.25624996
-      inSlope: -2.00625
-      outSlope: -2.00625
-      tangentMode: 136
-    - serializedVersion: 2
-      time: 0.9916667
-      value: 0.012499999
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-    m_PreInfinity: 0
-    m_PostInfinity: 0
-    m_RotationOrder: 0
-  LineColor: {r: 1, g: 0, b: 0.8068962, a: 1}
-  MoveSpeed: 3.5
-  CurrentCurve:
+  WaveCurve:
     serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  LineColor: {r: 0.78431374, g: 0.58431375, b: 0.9529412, a: 1}
+  NegativeColor: {r: 0.8980392, g: 0.16470589, b: 0.5529412, a: 1}
+  MoveSpeed: 3.5
 --- !u!212 &212321657872050980
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -277,5 +132,5 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0

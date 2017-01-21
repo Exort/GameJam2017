@@ -87,7 +87,7 @@ public class PlayerWaveDetector : MonoBehaviour
 
         if (diff >= 0f)
         {
-            deltaY = wave.CurrentCurve.Evaluate(step) * wave.ScreenWaveHeight;
+            deltaY = wave.WaveCurve.Evaluate(step) * wave.ScreenWaveHeight;
         }
 
         return deltaY;

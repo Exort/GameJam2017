@@ -8,10 +8,12 @@ public class Wave : MonoBehaviour
     public ObjectInstance Source;
     public int WaveWidth;
     public int WaveHeight;
-    public System.Collections.Generic.List<AnimationCurve> WaveCurves;
+    public AnimationCurve WaveCurve;
     public Color LineColor;
+    public Color NegativeColor;
+   
     public float MoveSpeed;
-    public AnimationCurve CurrentCurve;
+
     public float ScreenWaveWidth
     {
         get
@@ -34,10 +36,14 @@ public class Wave : MonoBehaviour
 
     void OnEnable()
     {
+        Color colorToUse = NegativeColor;
+        if(Source is PositiveWave)
+        {
+            colorToUse = LineColor;
+        }
         HighestPoint = 0;
-        int theIndex = r.Next(0, WaveCurves.Count);
-        CurrentCurve = WaveCurves[theIndex];
-        foreach(Keyframe k in CurrentCurve.keys)
+   
+        foreach(Keyframe k in WaveCurve.keys)
         {
             if(k.value > HighestPoint)
             {
@@ -61,10 +67,10 @@ public class Wave : MonoBehaviour
 
         for (int width = 0; width < WaveWidth - 1; ++width)
         {
-            float startCurvePoint = CurrentCurve.Evaluate((float)width / (float)WaveWidth) * (float)WaveHeight;
-            float endCurvePoint = CurrentCurve.Evaluate((float)(width + 1) / (float)WaveWidth) * (float)WaveHeight;
+            float startCurvePoint = WaveCurve.Evaluate((float)width / (float)WaveWidth) * (float)WaveHeight;
+            float endCurvePoint = WaveCurve.Evaluate((float)(width + 1) / (float)WaveWidth) * (float)WaveHeight;
 
-            DrawLine(waveTexture, width, (int)(startCurvePoint), width + 1, (int)(endCurvePoint), LineColor);
+            DrawLine(waveTexture, width, (int)(startCurvePoint), width + 1, (int)(endCurvePoint), colorToUse);
         }
         waveTexture.Apply();
 
