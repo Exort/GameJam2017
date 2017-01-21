@@ -64,6 +64,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
 
     private enum States
     {
+        Title,
         Start,
         Active,
         ChangingLanes,
@@ -72,6 +73,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
 
     void Awake()
     {
+        fsm.AddState (StateTitle);
         fsm.AddState(StateStart);
         fsm.AddState(StateActive);
         fsm.AddState(StateChangeLane);
@@ -79,7 +81,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
 
     void Start()
     {
-        fsm.ChangeState((int)States.Start);
+        fsm.ChangeState((int)States.Title);
 
         EventManager.Instance.Register(this);
     }
@@ -133,12 +135,16 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
     {
         if(laneIndex != CurrentLane)
         {
-            var localPosition = PlayerCharacter.transform.localPosition;
-            PlayerCharacter.transform.SetParent (Lanes [laneIndex].transform, false);
-            PlayerCharacter.transform.localPosition = localPosition;
-
+            var position = PlayerCharacter.transform.position;
+            position.y = Lanes[laneIndex].transform.position.y;
+            PlayerCharacter.transform.position = position;
             CurrentLane = laneIndex;
         }
+    }
+
+    private void StateTitle(StateMethod method, float deltaTime)
+    {
+        //do nothing
     }
 
     private void StateStart(StateMethod method, float deltaTime)
@@ -149,11 +155,8 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
                 break;
             case StateMethod.Update:
                 {
-                    if (Input.GetKeyDown(KeyCode.Space))
-                    {
-                        fsm.ChangeState((int)States.Active);
-                    }
-                    break;
+                fsm.ChangeState((int)States.Active);
+                break;
                 }
             case StateMethod.Exit:
                 break;
@@ -173,8 +176,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
                     Level = 1;
 
                     PlayerName = "MTL";
-                    PlayerCharacter = Instantiate(PlayerPrefab);
-                    PlayerCharacter.transform.localPosition = new Vector3(PlayerOffset, 0, 0);
+                PlayerCharacter = Instantiate(PlayerPrefab, new Vector3(PlayerOffset, 0f), Quaternion.identity);
                     ChangeLane(2);
                     break;
                 }

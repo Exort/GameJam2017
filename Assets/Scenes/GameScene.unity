@@ -91,6 +91,12 @@ NavMeshSettings:
     cellSize: 0.16666667
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &56728046 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114129722903414586, guid: 34b723f01a7de4d4ab11d97f4677c45d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1367872420}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &776416129
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +323,20 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114460281573241302, guid: 34b723f01a7de4d4ab11d97f4677c45d,
+        type: 2}
+      propertyPath: AnyKeyComponent
+      value: 
+      objectReference: {fileID: 56728046}
+    - target: {fileID: 114460281573241302, guid: 34b723f01a7de4d4ab11d97f4677c45d,
+        type: 2}
+      propertyPath: theUi
+      value: 
+      objectReference: {fileID: 1669117692}
+    - target: {fileID: 1431992267351824, guid: 34b723f01a7de4d4ab11d97f4677c45d, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 34b723f01a7de4d4ab11d97f4677c45d, type: 2}
   m_IsPrefabParent: 0
@@ -376,6 +396,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1669117692 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114692312790337460, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+    type: 2}
+  m_PrefabInternal: {fileID: 1669117691}
+  m_Script: {fileID: 11500000, guid: 4a4d0f43cde6bd5459fe181344eef890, type: 3}
 --- !u!1 &1912202203
 GameObject:
   m_ObjectHideFlags: 0
