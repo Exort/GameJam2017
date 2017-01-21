@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class GameManager : BaseSingleton<GameManager> 
 {
-<<<<<<< HEAD
-
     public GameOverView GameOverScreenPrefab;
-=======
     public GameUI GameUI;
 
->>>>>>> 06415bb5531b068ebbed558531f287832aedca54
     public List<GameObject> Lanes;
     public PlayerCharacter PlayerPrefab;
     public float PlayerOffset = -2.25f;
@@ -81,8 +77,7 @@ public class GameManager : BaseSingleton<GameManager>
         PlayerCharacter.transform.localPosition = new Vector3(PlayerOffset, 0, 0);
         ChangeLane (2);
     }
-<<<<<<< HEAD
-   
+
     private void GameOver()
     {
         //Remove
@@ -91,38 +86,8 @@ public class GameManager : BaseSingleton<GameManager>
 
         GameOverView gv = Instantiate(GameOverScreenPrefab);
         gv.Fillout(Score);
-      
-=======
-    private void SendHighScore()
-    {
-
-        currentHighScores = HighScoreTool.SendHighScore(PlayerName, _score);
     }
-    private void GameOver()
-    {
-        /*  Score = 0;
-        PlayerName = "MTL";*/
-        _score = 5;
-        PlayerName = "MTL";
 
-
-        currentHighScores = HighScoreTool.FetchHighScores();
-        if (_score > long.Parse(currentHighScores[currentHighScores.Count - 1].score))
-        {
-
-            Debug.Log("NEW HIGH SCORE!");
-            /*Should pop Enter Name UI*/
-            SendHighScore();
-
-
-        }
-        /*DISPLAY HIGH SCORE SCREEN*/
-        foreach (HighScoreTool.HighScoreEntry entr in currentHighScores)
-        {
-            Debug.Log(entr.name + " - " + entr.score);
-        }
->>>>>>> 06415bb5531b068ebbed558531f287832aedca54
-    }
     private void ChangeLane(int laneIndex)
     {
         if(laneIndex != CurrentLane)
