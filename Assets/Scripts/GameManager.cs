@@ -12,6 +12,11 @@ public class GameManager : BaseSingleton<GameManager>
 
     public int CurrentLane { get; private set; }
 
+    void Start()
+    {
+        CleanUp ();
+    }
+
     private void StartGame()
     {
         CleanUp ();
@@ -36,9 +41,10 @@ public class GameManager : BaseSingleton<GameManager>
     {
         if(PlayerCharacter != null)
         {
-            Destroy (PlayerCharacter);
+            DestroyImmediate (PlayerCharacter.gameObject);
             PlayerCharacter = null;
         }
+        CurrentLane = -1;
     }
 
     private void Update()
