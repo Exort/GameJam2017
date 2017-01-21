@@ -79,7 +79,7 @@ public class PlayerWaveDetector : MonoBehaviour
             if ((waveSign < 0 && step > 1f) || (waveSign > 0 && step < 0f))
             {
                 Debug.Log("Leaving wave");
-                playerBody.position = new Vector2(playerBody.position.x, startY);
+                playerBody.position = new Vector2(playerBody.position.x, transform.position.y);
                 currentWave = null;
             }
         }

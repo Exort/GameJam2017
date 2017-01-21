@@ -25,7 +25,10 @@ public class PlayerCharacter : MonoBehaviour
 
     public void ResetWave()
     {
-        waveDetector.ResetWave();
+        if (waveDetector != null)
+        {
+            waveDetector.ResetWave();
+        }
     }
 
     void Start ()
@@ -54,7 +57,10 @@ public class PlayerCharacter : MonoBehaviour
     {
         fsm.FixedUpdate(Time.deltaTime);
 
-        waveDetector.PositionX = playerBody.position.x;
+        if (waveDetector != null)
+        {
+            waveDetector.PositionX = playerBody.position.x;
+        }
     }
 
     public bool CanChangeLane
@@ -83,13 +89,19 @@ public class PlayerCharacter : MonoBehaviour
         {
         case StateMethod.Enter:
             _animationTime = 0;
-            waveDetector.enabled = false;
+            if (waveDetector != null)
+            {
+                waveDetector.enabled = false;
+            }
             break;
         case StateMethod.Update:
             LerpToTargetY (deltaTime, LaneChangeSpeed);
             break;
         case StateMethod.Exit:
-            waveDetector.enabled = true;
+            if (waveDetector != null)
+            {
+                waveDetector.enabled = true;
+            }
             break;
         }
     }
@@ -127,4 +139,3 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 }
-

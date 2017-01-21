@@ -73,6 +73,16 @@ public class Wave : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        float waveSign = Mathf.Sign(MoveSpeed);
+
+        if ((waveSign > 0 && transform.position.x >= 20f) || (waveSign < 0 && transform.position.x <= -20f))
+        {
+            DestroyObject(gameObject);
+        }
+    }
+
     void DrawLine(Texture2D tex, int x0, int y0, int x1, int y1, Color col)
     {
         int dy = (int)(y1 - y0);
