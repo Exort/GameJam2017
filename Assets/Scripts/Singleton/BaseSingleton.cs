@@ -3,9 +3,9 @@
 public abstract class BaseSingleton<T> : MonoBehaviour 
     where T : class, new()
 {
-    protected T _instance;
+    protected static T _instance;
 
-    public T Instance
+    public static T Instance
     {
         get
         {

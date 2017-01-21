@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : BaseSingleton<GameManager> 
+public class GameManager : BaseSingleton<GameManager> , EventListener
 {
     public GameOverView GameOverScreenPrefab;
     public GameUI GameUI;
@@ -68,17 +68,56 @@ public class GameManager : BaseSingleton<GameManager>
         Active,
         ChangingLanes,
         GameOver
-    }
+    };
 
     void Awake()
     {
         fsm.AddState(StateStart);
         fsm.AddState(StateActive);
+        fsm.AddState(StateChangeLane);
     }
 
     void Start()
     {
         fsm.ChangeState((int)States.Start);
+
+        EventManager.Instance.Register(this);
+    }
+
+    void Reset()
+    {
+        if (PlayerCharacter != null)
+        {
+            DestroyImmediate(PlayerCharacter.gameObject);
+            PlayerCharacter = null;
+        }
+
+        _level = 0;
+        _multiplier = 0;
+        _score = 0;
+
+        GameUI.Reset();
+
+        CurrentLane = -1;
+    }
+
+    void Update()
+    {
+        fsm.Update(Time.deltaTime);
+
+        //todo use input manager
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            GameOver();
+        }
+    }
+
+    public void OnMessage(EventType tp, object param)
+    {
+        if (tp == EventType.StartGame)
+        {
+            fsm.ChangeState((int)States.Start);
+        }
     }
 
     private void GameOver()
@@ -89,7 +128,7 @@ public class GameManager : BaseSingleton<GameManager>
         GameOverView gv = Instantiate(GameOverScreenPrefab);
         gv.Fillout(Score);
     }
-    
+
     private void ChangeLane(int laneIndex)
     {
         if(laneIndex != CurrentLane)
@@ -99,45 +138,6 @@ public class GameManager : BaseSingleton<GameManager>
             PlayerCharacter.transform.localPosition = localPosition;
 
             CurrentLane = laneIndex;
-        }
-    }
-
-    private void Reset()
-    {
-        if(PlayerCharacter != null)
-        {
-            DestroyImmediate (PlayerCharacter.gameObject);
-            PlayerCharacter = null;
-        }
-
-        _level = 0;
-        _multiplier = 0;
-        _score = 0;
-
-        GameUI.Reset ();
-
-        fsm.ChangeState((int)States.Start);
-
-        CurrentLane = -1;
-    }
-
-    private void Update()
-    {
-        fsm.Update(Time.deltaTime);
-
-        //todo use input manager
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            GameOver();
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            ChangeLane (Mathf.Max (0, CurrentLane - 1));
-        }
-
-        if(Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            ChangeLane (Mathf.Min (Lanes.Count - 1, CurrentLane + 1));
         }
     }
 
@@ -176,6 +176,53 @@ public class GameManager : BaseSingleton<GameManager>
                     PlayerCharacter = Instantiate(PlayerPrefab);
                     PlayerCharacter.transform.localPosition = new Vector3(PlayerOffset, 0, 0);
                     ChangeLane(2);
+                    break;
+                }
+            case StateMethod.Update:
+                {
+                    if (Input.GetKeyDown(KeyCode.UpArrow))
+                    {
+                        ChangeLane(Mathf.Max(0, CurrentLane - 1));
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.DownArrow))
+                    {
+                        ChangeLane(Mathf.Min(Lanes.Count - 1, CurrentLane + 1));
+                    }
+                    break;
+                }
+            case StateMethod.Exit:
+                {
+                    break;
+                }
+        }
+    }
+
+    private void StateChangeLane(StateMethod method, float deltaTime)
+    {
+        switch(method)
+        {
+            case StateMethod.Enter:
+                {
+                    break;
+                }
+            case StateMethod.Update:
+                {
+                    break;
+                }
+            case StateMethod.Exit:
+                {
+                    break;
+                }
+        }
+    }
+
+    private void StateGameOver(StateMethod method, float deltaTime)
+    {
+        switch (method)
+        {
+            case StateMethod.Enter:
+                {
                     break;
                 }
             case StateMethod.Update:
