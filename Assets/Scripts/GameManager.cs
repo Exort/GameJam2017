@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -59,30 +60,31 @@ public class GameManager : BaseSingleton<GameManager>
 
     public int CurrentLane { get; private set; }
 
-    void Start()
+    private FSM fsm = new FSM();
+
+    private enum States
     {
-        Reset ();
+        Start,
+        Active,
+        ChangingLanes,
+        GameOver
     }
 
-    private void StartGame()
+    void Awake()
     {
-        Reset ();
+        fsm.AddState(StateStart);
+        fsm.AddState(StateActive);
+    }
 
-        Score = 0;
-        Multiplier = 1;
-        Level = 1;
-
-        PlayerName = "MTL";
-        PlayerCharacter = Instantiate (PlayerPrefab);
-        PlayerCharacter.transform.localPosition = new Vector3(PlayerOffset, 0, 0);
-        ChangeLane (2);
+    void Start()
+    {
+        fsm.ChangeState((int)States.Start);
     }
 
     private void GameOver()
     {
         //Remove
         Score = 5;
-   
 
         GameOverView gv = Instantiate(GameOverScreenPrefab);
         gv.Fillout(Score);
@@ -114,16 +116,16 @@ public class GameManager : BaseSingleton<GameManager>
 
         GameUI.Reset ();
 
+        fsm.ChangeState((int)States.Start);
+
         CurrentLane = -1;
     }
 
     private void Update()
     {
+        fsm.Update(Time.deltaTime);
+
         //todo use input manager
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            StartGame ();
-        }
         if (Input.GetKeyDown(KeyCode.P))
         {
             GameOver();
@@ -136,6 +138,54 @@ public class GameManager : BaseSingleton<GameManager>
         if(Input.GetKeyDown(KeyCode.DownArrow))
         {
             ChangeLane (Mathf.Min (Lanes.Count - 1, CurrentLane + 1));
+        }
+    }
+
+    private void StateStart(StateMethod method, float deltaTime)
+    {
+        switch(method)
+        {
+            case StateMethod.Enter:
+                break;
+            case StateMethod.Update:
+                {
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        fsm.ChangeState((int)States.Active);
+                    }
+                    break;
+                }
+            case StateMethod.Exit:
+                break;
+        }
+    }
+
+    private void StateActive(StateMethod method, float deltaTime)
+    {
+        switch(method)
+        {
+            case StateMethod.Enter:
+                {
+                    Reset();
+
+                    Score = 0;
+                    Multiplier = 1;
+                    Level = 1;
+
+                    PlayerName = "MTL";
+                    PlayerCharacter = Instantiate(PlayerPrefab);
+                    PlayerCharacter.transform.localPosition = new Vector3(PlayerOffset, 0, 0);
+                    ChangeLane(2);
+                    break;
+                }
+            case StateMethod.Update:
+                {
+                    break;
+                }
+            case StateMethod.Exit:
+                {
+                    break;
+                }
         }
     }
 }
