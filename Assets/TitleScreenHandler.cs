@@ -19,10 +19,11 @@ public class TitleScreenHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(Input.anyKeyDown)
+        if(true || Input.anyKeyDown)
         {
             EventManager.Instance.SendEvent(EventType.StartGame, null);
             DestroyImmediate(this.gameObject);
+            return;
         }
 
         blinkTimer += Time.deltaTime;

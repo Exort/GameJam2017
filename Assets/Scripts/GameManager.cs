@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class GameManager : BaseSingleton<GameManager> , EventListener
 {
+    public ScrollHorizontal ScrollingBackground;
     public GameOverView GameOverScreenPrefab;
     public GameUI GameUI;
     public SpawnerManager Spawner;
     public List<GameObject> Lanes;
     public PlayerCharacter PlayerPrefab;
+
     public float PlayerOffset = -2.25f;
+    public float ScrollIncrement = 0.25f;
 
     public string PlayerName;
 
@@ -53,6 +56,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         {
             _multiplier = value;
             GameUI.MultiplierText.text = "X" + _multiplier.ToString();
+            ScrollingBackground.ScrollSpeed = ScrollIncrement * Multiplier;
         }
     }
 
@@ -96,6 +100,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
 
         _level = 0;
         _multiplier = 0;
+        ScrollingBackground.ScrollSpeed = 0;
         _score = 0;
 
         GameUI.Reset();
