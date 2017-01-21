@@ -4,6 +4,13 @@ using System;
 
 public class PlayerCharacter : MonoBehaviour
 {
+    public float PlayerOffset = -7f;
+    public float MaxSpeed;
+    public float CurrentSpeed;
+    public float BaseSpeed;
+    public float KillSpeed;
+    public float BoostVelocity = 5;
+    public float WaterVelocity = 1;
     private enum States
     {
         Standing,
@@ -11,98 +18,94 @@ public class PlayerCharacter : MonoBehaviour
     };
 
     public float LaneChangeSpeed = 5f;
-
-    private float startY;
-    private Wave currentWave;
+    public PlayerWaveDetector WaveDetectorPrefab;
 
     private Rigidbody2D playerBody;
-    private BoxCollider2D playerCollider;
-    private SpriteRenderer spriteRender;
+    private PlayerWaveDetector waveDetector;
 
     private float _targetY;
     private float _animationTime;
 
     private FSM fsm = new FSM();
 
-    public event Action<Wave> EnteredWave = delegate {};
+    public Action<Wave> EnteredWave;
 
     public void ResetWave()
     {
-        currentWave = null;
+        if (waveDetector != null)
+        {
+            waveDetector.ResetWave();
+        }
     }
 
     void Start ()
     {
-        currentWave = null;
+
+        MaxSpeed = 5;
+        CurrentSpeed = 0;
+        BaseSpeed = 0;
+        KillSpeed = -3;
+
+    
+
         playerBody = GetComponent<Rigidbody2D>();
-        playerCollider = GetComponent<BoxCollider2D>();
 
-        spriteRender = GetComponentInChildren<SpriteRenderer>();
-    }
-
-    void UpdateWaveMovement ()
-    {
-        if (currentWave != null)
-        {
-            float waveSign = Mathf.Sign(currentWave.MoveSpeed);
-
-            float waveX = currentWave.transform.position.x;
-            float diff = transform.position.x - waveX;
-
-            float step = diff / currentWave.ScreenWaveWidth;
-
-          //  Debug.Log(string.Format("Step={0}, WaveX={1}, PlayerX={2}, {3}", step, waveX, transform.position.x, diff));
-
-            if (diff >= 0f)
-            {
-                float deltaY = currentWave.WaveCurve.Evaluate(step) * currentWave.ScreenWaveHeight;
-
-                playerBody.position = new Vector2(playerBody.position.x, startY + deltaY);
-            }
-            else if ((waveSign < 0 && step > 1f)
-                     || (waveSign > 0 && step < 0f))
-            {
-            //    Debug.Log("Leaving wave");
-                playerBody.position = new Vector2(playerBody.position.x, startY);
-                currentWave = null;
-                playerCollider.enabled = true;
-            }
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        var wave = collision.gameObject.GetComponent<Wave>();
-        if (wave != null)
-        {
-            if ((currentWave != null && currentWave != wave) || currentWave == null)
-            {
-                playerCollider.enabled = false;
-                currentWave = wave;
-
-                startY = playerBody.position.y;
-
-                EnteredWave (wave);
-          //      Debug.Log("Entering wave");
-            }
-        }
+        waveDetector = Instantiate(WaveDetectorPrefab, transform.position, Quaternion.identity);
+        waveDetector.PlayerBody = playerBody;
+        waveDetector.EnteredWave += onEnteredWave;
     }
 
     void Awake()
     {
         fsm.AddState (StateStanding);
         fsm.AddState (StateChangingLane);
+
         fsm.ChangeState ((int)States.Standing);
     }
 
     void Update()
     {
-        fsm.Update (Time.deltaTime);
+      
+
+        /*Speed management*/
+        //MaxSpeed = 5;
+        if(Input.GetKey(KeyCode.Space))
+        {
+            if(CurrentSpeed < MaxSpeed)
+            {
+                CurrentSpeed += (Time.deltaTime * BoostVelocity);
+                if(CurrentSpeed > MaxSpeed)
+                {
+                    CurrentSpeed = MaxSpeed;
+                }
+            }
+        }
+        CurrentSpeed -= WaterVelocity * Time.deltaTime;
+
+
+        if(CurrentSpeed< KillSpeed)
+        {
+            //GAMEOVER
+            EventManager.Instance.SendEvent(EventType.GameOver, null);
+        }
+        
+       Vector3 v3= transform.position;
+        Debug.Log(v3.x);
+        v3.x = PlayerOffset + CurrentSpeed;
+        transform.position = v3;
+
+
+        fsm.Update(Time.deltaTime);
     }
 
     void FixedUpdate()
     {
         fsm.FixedUpdate(Time.deltaTime);
+
+        if (waveDetector != null)
+        {
+            waveDetector.PositionX = playerBody.position.x;
+        }
     }
 
     public bool CanChangeLane
@@ -120,15 +123,9 @@ public class PlayerCharacter : MonoBehaviour
         _targetY = targetY;
         fsm.ChangeState ((int)States.ChangingLane);
     }
-        
+
     void StateStanding(StateMethod method, float deltaTime)
     {
-        switch(method)
-        {
-        case StateMethod.FixedUpdate:
-            UpdateWaveMovement ();
-            break;
-        }
     }
 
     void StateChangingLane(StateMethod method, float deltaTime)
@@ -137,11 +134,19 @@ public class PlayerCharacter : MonoBehaviour
         {
         case StateMethod.Enter:
             _animationTime = 0;
+            if (waveDetector != null)
+            {
+                waveDetector.enabled = false;
+            }
             break;
         case StateMethod.Update:
             LerpToTargetY (deltaTime, LaneChangeSpeed);
             break;
         case StateMethod.Exit:
+            if (waveDetector != null)
+            {
+                waveDetector.enabled = true;
+            }
             break;
         }
     }
@@ -159,11 +164,23 @@ public class PlayerCharacter : MonoBehaviour
         else
         {
             playerBody.position = targetPosition;
+            waveDetector.Position = targetPosition;
         }
+
         if(Mathf.Abs(playerBody.position.y - targetPosition.y) < Mathf.Epsilon)
         {
+            waveDetector.Position = targetPosition;
+
             fsm.ChangeState ((int)States.Standing);
         }
     }
-}
 
+    private void onEnteredWave(Wave wave)
+    {
+        var handler = EnteredWave;
+        if (handler != null)
+        {
+            handler.Invoke(wave);
+        }
+    }
+}

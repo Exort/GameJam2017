@@ -101,7 +101,10 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
 
         _level = 0;
         _multiplier = 0;
-        ScrollingBackground.ScrollSpeed = 0;
+        if (ScrollingBackground != null)
+        {
+            ScrollingBackground.ScrollSpeed = 0;
+        }
         _score = 0;
 
         GameUI.Reset();
@@ -167,8 +170,8 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
                 break;
             case StateMethod.Update:
                 {
-                fsm.ChangeState((int)States.Active);
-                break;
+                    fsm.ChangeState((int)States.Active);
+                    break;
                 }
             case StateMethod.Exit:
                 Spawner.enabled = false;
