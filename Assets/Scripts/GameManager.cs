@@ -9,16 +9,19 @@ public class GameManager : BaseSingleton<GameManager>
     public float PlayerOffset = -2.25f;
 
     public PlayerCharacter PlayerCharacter { get; private set; }
-    public string PlayerName { get; set; }
-    public long Score = 0;
+
     public int CurrentLane { get; private set; }
-    public List<HighScoreTool.HighScoreEntry> currentHighScores = HighScoreTool.FetchHighScores();
+
+    void Start()
+    {
+        CleanUp ();
+    }
+
     private void StartGame()
     {
+        CleanUp ();
         PlayerCharacter = Instantiate (PlayerPrefab);
         PlayerCharacter.transform.localPosition = new Vector3(PlayerOffset, 0, 0);
-        Score = 0;
-        PlayerName = "MTL";
         ChangeLane (2);
     }
 
@@ -31,53 +34,21 @@ public class GameManager : BaseSingleton<GameManager>
             PlayerCharacter.transform.localPosition = localPosition;
 
             CurrentLane = laneIndex;
-            
         }
     }
-    private void SendHighScore()
-    {
-       
-        currentHighScores = HighScoreTool.SendHighScore(PlayerName, Score);
-    }
-    private void GameOver()
-    {
-        /*  Score = 0;
-        PlayerName = "MTL";*/
-        Score = 5;
-        PlayerName = "MTL";
 
-
-        currentHighScores = HighScoreTool.FetchHighScores();
-        if(Score > long.Parse(currentHighScores[currentHighScores.Count-1].score))
-        {
-
-            Debug.Log("NEW HIGH SCORE!");
-            /*Should pop Enter Name UI*/
-            SendHighScore();
-
-            
-        }
-        /*DISPLAY HIGH SCORE SCREEN*/
-        foreach(HighScoreTool.HighScoreEntry entr in currentHighScores)
-        {
-            Debug.Log(entr.name + " - " + entr.score);
-        }
-    }
     private void CleanUp()
     {
         if(PlayerCharacter != null)
         {
-            Destroy (PlayerCharacter);
+            DestroyImmediate (PlayerCharacter.gameObject);
             PlayerCharacter = null;
         }
+        CurrentLane = -1;
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            GameOver();
-        }
         //todo use input manager
         if(Input.GetKeyDown(KeyCode.Space))
         {
