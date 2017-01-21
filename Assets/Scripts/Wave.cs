@@ -10,7 +10,7 @@ public class Wave : MonoBehaviour
     public int WaveHeight;
     public AnimationCurve WaveCurve;
     public Color LineColor;
-    public Color NegativeColor;
+    
    
     public float MoveSpeed;
 
@@ -36,11 +36,9 @@ public class Wave : MonoBehaviour
 
     void OnEnable()
     {
-        Color colorToUse = NegativeColor;
-        if(Source is PositiveWave)
-        {
-            colorToUse = LineColor;
-        }
+
+            
+      
         HighestPoint = 0;
    
         foreach(Keyframe k in WaveCurve.keys)
@@ -70,7 +68,7 @@ public class Wave : MonoBehaviour
             float startCurvePoint = WaveCurve.Evaluate((float)width / (float)WaveWidth) * (float)WaveHeight;
             float endCurvePoint = WaveCurve.Evaluate((float)(width + 1) / (float)WaveWidth) * (float)WaveHeight;
 
-            DrawLine(waveTexture, width, (int)(startCurvePoint), width + 1, (int)(endCurvePoint), colorToUse);
+            DrawLine(waveTexture, width, (int)(startCurvePoint), width + 1, (int)(endCurvePoint), LineColor);
         }
         waveTexture.Apply();
 

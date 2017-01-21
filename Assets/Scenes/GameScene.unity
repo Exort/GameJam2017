@@ -104,6 +104,16 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: PositiveWaveTemplates.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: NegativeWaveTemplates.Array.size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4103165091381372, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -145,6 +155,66 @@ Prefab:
       propertyPath: GameUI
       value: 
       objectReference: {fileID: 2035305423}
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: PositiveWaveTemplates.Array.data[0]
+      value: 
+      objectReference: {fileID: 114486980664105406, guid: c4266b08814cff849b59aa64abc57774,
+        type: 2}
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: PositiveWaveTemplates.Array.data[1]
+      value: 
+      objectReference: {fileID: 114924862883007606, guid: 8c7160f5a91e8e740a2530d02150f778,
+        type: 2}
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: PositiveWaveTemplates.Array.data[2]
+      value: 
+      objectReference: {fileID: 114786011144621738, guid: 08de5237d91eae94f958b1fcd0a1a7cd,
+        type: 2}
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: PositiveWaveTemplates.Array.data[3]
+      value: 
+      objectReference: {fileID: 114906375219981962, guid: 3ce5985870e45cf438a8ac7d6f4d8243,
+        type: 2}
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: PositiveWaveTemplates.Array.data[4]
+      value: 
+      objectReference: {fileID: 114690604256351400, guid: e04a4e90021183c4cbc8f66d9f7ae02b,
+        type: 2}
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: NegativeWaveTemplates.Array.data[0]
+      value: 
+      objectReference: {fileID: 114266616790631778, guid: 6ba2b1cbd5fbb8a449909cd3287ac251,
+        type: 2}
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: NegativeWaveTemplates.Array.data[1]
+      value: 
+      objectReference: {fileID: 114742966911633806, guid: ca82baa9e8b0ed5489d4d28f91a8f8e7,
+        type: 2}
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: NegativeWaveTemplates.Array.data[2]
+      value: 
+      objectReference: {fileID: 114445985759883046, guid: 19322c500544a90418b0d47c0eeb469a,
+        type: 2}
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: NegativeWaveTemplates.Array.data[3]
+      value: 
+      objectReference: {fileID: 114808014224145722, guid: 4cfa95a0da0997942b0309eec80152f6,
+        type: 2}
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: NegativeWaveTemplates.Array.data[4]
+      value: 
+      objectReference: {fileID: 114998037542111874, guid: bdde24b3e3e157741a2277cfa029076f,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
   m_IsPrefabParent: 0

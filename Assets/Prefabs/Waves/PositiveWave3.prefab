@@ -9,33 +9,33 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1405362050342544}
+  m_RootGameObject: {fileID: 1218253619990502}
   m_IsPrefabParent: 1
---- !u!1 &1405362050342544
+--- !u!1 &1218253619990502
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4377955046438438}
-  - component: {fileID: 114486980664105406}
-  - component: {fileID: 212321657872050980}
-  - component: {fileID: 50826100100732196}
-  - component: {fileID: 61226579107713402}
+  - component: {fileID: 4386120118300934}
+  - component: {fileID: 114786011144621738}
+  - component: {fileID: 212566485296723382}
+  - component: {fileID: 50816236621719190}
+  - component: {fileID: 61761146501482294}
   m_Layer: 8
-  m_Name: Wave
+  m_Name: PositiveWave3
   m_TagString: Untagged
   m_Icon: {fileID: 4660412927644837186, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4377955046438438
+--- !u!4 &4386120118300934
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1405362050342544}
+  m_GameObject: {fileID: 1218253619990502}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -14.44, y: -0.5, z: 0}
   m_LocalScale: {x: 7, y: 7, z: 1}
@@ -43,13 +43,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50826100100732196
+--- !u!50 &50816236621719190
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1405362050342544}
+  m_GameObject: {fileID: 1218253619990502}
   m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -63,12 +63,12 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &61226579107713402
+--- !u!61 &61761146501482294
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1405362050342544}
+  m_GameObject: {fileID: 1218253619990502}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -76,13 +76,13 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0.32999998, y: 0.089999996}
   serializedVersion: 2
-  m_Size: {x: 0.65999997, y: 0.17999999}
---- !u!114 &114486980664105406
+  m_Size: {x: 0.36, y: 0.14}
+--- !u!114 &114786011144621738
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1405362050342544}
+  m_GameObject: {fileID: 1218253619990502}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 972f54f9ac5b54749837656487ad262a, type: 3}
@@ -92,19 +92,42 @@ MonoBehaviour:
   WaveHeight: 18
   WaveCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 2
+      time: -0.0125
+      value: 0.012499999
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+    - serializedVersion: 2
+      time: 0.40583342
+      value: 0.11796889
+      inSlope: 0.37156934
+      outSlope: 0.37156934
+      tangentMode: 136
+    - serializedVersion: 2
+      time: 0.64034724
+      value: 0.25507802
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+    - serializedVersion: 2
+      time: 0.9791667
+      value: -0.0015624948
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   LineColor: {r: 0.78431374, g: 0.58431375, b: 0.9529412, a: 1}
-  NegativeColor: {r: 0.8980392, g: 0.16470589, b: 0.5529412, a: 1}
   MoveSpeed: 3.5
---- !u!212 &212321657872050980
+--- !u!212 &212566485296723382
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1405362050342544}
+  m_GameObject: {fileID: 1218253619990502}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

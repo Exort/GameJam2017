@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnerManager : MonoBehaviour {
+    public System.Random r = new System.Random();
     public GameManager GameManager;
-    public Wave PositiveWaveTemplate;
-    public Wave NegativeWaveTemplate;
+    public List<Wave> PositiveWaveTemplates;
+    public List<Wave> NegativeWaveTemplates;
     Level currentLevel;
 	// Use this for initialization
 	void Start () {
@@ -36,7 +37,8 @@ public class SpawnerManager : MonoBehaviour {
             {
                 if (inst is PositiveWave)
                 {
-                    Wave obj = Instantiate(PositiveWaveTemplate, GameManager.Lanes[inst.LaneIndex].transform,false);
+                    int index = r.Next(0, PositiveWaveTemplates.Count);
+                    Wave obj = Instantiate(PositiveWaveTemplates[index], GameManager.Lanes[inst.LaneIndex].transform,false);
                     obj.enabled = false;
                     obj.Source = inst;
                     obj.enabled = true;
@@ -44,7 +46,8 @@ public class SpawnerManager : MonoBehaviour {
                 }
                 if (inst is NegativeWave)
                 {
-                    Wave obj = Instantiate(PositiveWaveTemplate, GameManager.Lanes[inst.LaneIndex].transform,false);
+                    int index = r.Next(0, NegativeWaveTemplates.Count);
+                    Wave obj = Instantiate(NegativeWaveTemplates[index], GameManager.Lanes[inst.LaneIndex].transform,false);
                     obj.MoveSpeed = obj.MoveSpeed * -1;
                     Vector3 t = obj.transform.position;
                     t.x *= -1;
@@ -55,7 +58,8 @@ public class SpawnerManager : MonoBehaviour {
                 }
                 if (inst is FireWall)
                 {
-                    Wave obj = Instantiate(PositiveWaveTemplate, GameManager.Lanes[inst.LaneIndex].transform, false);
+                    int index = r.Next(0, NegativeWaveTemplates.Count);
+                    Wave obj = Instantiate(NegativeWaveTemplates[index], GameManager.Lanes[inst.LaneIndex].transform, false);
                     obj.MoveSpeed = obj.MoveSpeed * -1;
                     Vector3 t = obj.transform.position;
                     t.x *= -1;
