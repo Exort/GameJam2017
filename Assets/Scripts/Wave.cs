@@ -57,7 +57,7 @@ public class Wave : MonoBehaviour
 
         spriteRenderer.sprite = Sprite.Create(waveTexture, new Rect(0, 0, WaveWidth, WaveHeight), Vector2.zero);
 
-        boxCollider.size = new Vector2(WaveWidth / 100f, WaveHeight / 100f);
+        boxCollider.size = new Vector2((WaveWidth - 4) / 100f, (WaveHeight -4) / 100f);
     }
 
     void OnDisable()

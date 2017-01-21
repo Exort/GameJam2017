@@ -62,47 +62,69 @@ public class PlayerWaveDetector : MonoBehaviour
         {
             float waveSign = Mathf.Sign(currentWave.MoveSpeed);
 
-            float waveX = currentWave.transform.position.x;
-            float diff = transform.position.x - waveX;
+            float step = 0f;
+            float deltaY = GetDeltaY(currentWave, ref step);
 
-            float step = diff / currentWave.ScreenWaveWidth;
-
-            //Debug.Log(string.Format("Step={0}, WaveX={1}, PlayerX={2}, {3}", step, waveX, playerBody.position.y, diff));
-
-            if (diff >= 0f)
-            {
-                float deltaY = currentWave.WaveCurve.Evaluate(step) * currentWave.ScreenWaveHeight;
-
-                playerBody.position = new Vector2(playerBody.position.x, startY + deltaY);
-            }
+            playerBody.position = new Vector2(playerBody.position.x, startY + deltaY);
 
             if ((waveSign < 0 && step > 1f) || (waveSign > 0 && step < 0f))
             {
                 Debug.Log("Leaving wave");
                 playerBody.position = new Vector2(playerBody.position.x, transform.position.y);
+
                 currentWave = null;
             }
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    private float GetDeltaY(Wave wave, ref float step)
+    {
+        float deltaY = 0f;
+
+        float diff = transform.position.x - wave.transform.position.x;
+
+        step = diff / wave.ScreenWaveWidth;
+
+        if (diff >= 0f)
+        {
+            deltaY = wave.WaveCurve.Evaluate(step) * wave.ScreenWaveHeight;
+        }
+
+        return deltaY;
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
     {
         var wave = collision.gameObject.GetComponent<Wave>();
         if (wave != null)
         {
-            if ((currentWave != null && currentWave != wave) || currentWave == null)
+            if (wave == currentWave)
             {
-                currentWave = wave;
+                return;
+            }
 
-                startY = playerBody.position.y;
+            if (currentWave != null)
+            {
+                float step = 0f;
+                float currentWaveDelta = GetDeltaY(currentWave, ref step);
+                float targetWaveDelta = GetDeltaY(wave, ref step);
 
-                Debug.Log("Entering wave");
-
-                var handler = EnteredWave;
-                if (handler != null)
+                if (targetWaveDelta < currentWaveDelta)
                 {
-                    handler.Invoke(currentWave);
+                    return;
                 }
+            }
+
+            currentWave = wave;
+
+            startY = playerBody.position.y;
+
+            Debug.Log("Entering wave");
+
+            var handler = EnteredWave;
+            if (handler != null)
+            {
+                handler.Invoke(currentWave);
             }
         }
     }

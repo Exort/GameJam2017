@@ -67,36 +67,31 @@ public class PlayerCharacter : MonoBehaviour
 
     void Update()
     {
-      
-
-        /*Speed management*/
-        //MaxSpeed = 5;
-        if(Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
-            if(CurrentSpeed < MaxSpeed)
+            if (CurrentSpeed < MaxSpeed)
             {
-                CurrentSpeed += ( BoostVelocity);
-                if(CurrentSpeed > MaxSpeed)
+                CurrentSpeed += (BoostVelocity);
+                if (CurrentSpeed > MaxSpeed)
                 {
                     CurrentSpeed = MaxSpeed;
                 }
             }
         }
         CurrentSpeed -= WaterVelocity;
-        if(CurrentSpeed < LowestSpeed)
+        if (CurrentSpeed < LowestSpeed)
         {
             CurrentSpeed = LowestSpeed;
         }
-        Debug.Log(CurrentSpeed + " - " + playerBody.position.x);
-        if (playerBody.position.x >= MaxPosition && CurrentSpeed >0)
+
+        if (playerBody.position.x >= MaxPosition && CurrentSpeed > 0)
         {
-
-
             CurrentSpeed = 0;
         }
+
         playerBody.velocity = new Vector2(CurrentSpeed, 0);
-        
-        if(playerBody.position.x < KillPosition)
+
+        if (playerBody.position.x < KillPosition)
         {
             //GAMEOVER
             if (!Dead)
@@ -105,13 +100,7 @@ public class PlayerCharacter : MonoBehaviour
                 EventManager.Instance.SendEvent(EventType.GameOver, null);
             }
         }
-        
-      /* Vector3 v3= playerBody.position ;
-        Debug.Log(v3.x);
-        v3.x = PlayerOffset + CurrentSpeed;
-        playerBody.position = v3;
 
-    */
         fsm.Update(Time.deltaTime);
     }
 
