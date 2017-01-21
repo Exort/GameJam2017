@@ -138,6 +138,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
             var position = PlayerCharacter.transform.position;
             position.y = Lanes[laneIndex].transform.position.y;
             PlayerCharacter.transform.position = position;
+            PlayerCharacter.ResetWave();
             CurrentLane = laneIndex;
         }
     }

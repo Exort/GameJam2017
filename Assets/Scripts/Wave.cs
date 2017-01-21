@@ -1,44 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Wave : MonoBehaviour {
-
+[ExecuteInEditMode]
+public class Wave : MonoBehaviour
+{
     public int WaveWidth;
     public int WaveHeight;
     public AnimationCurve WaveCurve;
     public Color LineColor;
+    public float MoveSpeed;
+
+    public float ScreenWaveWidth
+    {
+        get
+        {
+            return ((float)WaveWidth / 100) * transform.localScale.x;
+        }
+    }
+
+    public float ScreenWaveHeight
+    {
+        get
+        {
+            return ((float)WaveHeight / 100) * transform.localScale.y;
+        }
+    }
 
     private Texture2D waveTexture;
-
- //   void Awake()
- //   {
- //       var spriteRenderer = GetComponent<SpriteRenderer>();
-
- //       waveTexture = new Texture2D(WaveWidth, WaveHeight);
- //       waveTexture.filterMode = FilterMode.Point;
- //       Color[] transparent = new Color[WaveWidth * WaveHeight];
- //       for(int i=0; i<transparent.Length; ++i)
- //       {
- //           transparent[i] = Color.clear;
- //       }
- //       waveTexture.SetPixels(transparent);
-
- //       for (int width = 0; width < WaveWidth-1; ++width)
- //       {
- //           float startCurvePoint = WaveCurve.Evaluate((float)width / (float)WaveWidth) * (float)WaveHeight;
- //           float endCurvePoint = WaveCurve.Evaluate((float)(width + 1) / (float)WaveWidth) * (float)WaveHeight;
-
- //           DrawLine(waveTexture, width, (int)(startCurvePoint), width + 1, (int)(endCurvePoint), LineColor);
- //       }
- //       waveTexture.Apply();
-
- //       spriteRenderer.sprite = Sprite.Create(waveTexture, new Rect(0, 0, WaveWidth, WaveHeight), Vector2.zero);
-	//}
+    private BoxCollider2D boxCollider;
+    private Rigidbody2D waveBody;
 
     void OnEnable()
     {
         var spriteRenderer = GetComponent<SpriteRenderer>();
+
+        boxCollider = GetComponent<BoxCollider2D>();
+        waveBody = GetComponent<Rigidbody2D>();
 
         waveTexture = new Texture2D(WaveWidth, WaveHeight);
         waveTexture.filterMode = FilterMode.Point;
@@ -59,6 +55,8 @@ public class Wave : MonoBehaviour {
         waveTexture.Apply();
 
         spriteRenderer.sprite = Sprite.Create(waveTexture, new Rect(0, 0, WaveWidth, WaveHeight), Vector2.zero);
+
+        boxCollider.size = new Vector2(WaveWidth / 100f, WaveHeight / 100f);
     }
 
     void OnDisable()
@@ -66,10 +64,13 @@ public class Wave : MonoBehaviour {
 
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
+    void Update()
+    {
+        if (Application.isPlaying)
+        {
+            waveBody.velocity = new Vector2(MoveSpeed, 0f);
+        }
+    }
 
     void DrawLine(Texture2D tex, int x0, int y0, int x1, int y1, Color col)
     {
