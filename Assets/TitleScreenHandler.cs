@@ -14,6 +14,7 @@ public class TitleScreenHandler : MonoBehaviour {
 	void Update () {
 	    if(Input.anyKeyDown)
         {
+            EventManager.Instance.SendEvent(EventType.StartGame, null);
             DestroyImmediate(this.gameObject);
         }	
 	}

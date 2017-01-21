@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : BaseSingleton<GameManager> 
+public class GameManager : BaseSingleton<GameManager> , EventListener
 {
     public GameOverView GameOverScreenPrefab;
     public GameUI GameUI;
@@ -62,8 +62,15 @@ public class GameManager : BaseSingleton<GameManager>
     void Start()
     {
         Reset ();
+        EventManager.Instance.Register(this);
     }
-
+    public void OnMessage(EventType tp, object param)
+    {
+        if(tp == EventType.StartGame)
+        {
+            StartGame();
+        }
+    }
     private void StartGame()
     {
         Reset ();
@@ -120,10 +127,7 @@ public class GameManager : BaseSingleton<GameManager>
     private void Update()
     {
         //todo use input manager
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            StartGame ();
-        }
+      
         if (Input.GetKeyDown(KeyCode.P))
         {
             GameOver();
