@@ -88,6 +88,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad90231e438253f469898f280b517cc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gm: {fileID: 0}
+  MaxSpeed: 0
+  CurrentSpeed: 0
+  BaseSpeed: 0
+  KillSpeed: 0
+  BoostVelocity: 5
+  WaterVelocity: 1
   LaneChangeSpeed: 5
   WaveDetectorPrefab: {fileID: 114211556686256816, guid: 98915769334c1aa45a94c7cc0c715463,
     type: 2}

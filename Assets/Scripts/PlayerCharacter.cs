@@ -4,6 +4,13 @@ using System;
 
 public class PlayerCharacter : MonoBehaviour
 {
+    public float PlayerOffset = -7f;
+    public float MaxSpeed;
+    public float CurrentSpeed;
+    public float BaseSpeed;
+    public float KillSpeed;
+    public float BoostVelocity = 5;
+    public float WaterVelocity = 1;
     private enum States
     {
         Standing,
@@ -33,6 +40,14 @@ public class PlayerCharacter : MonoBehaviour
 
     void Start ()
     {
+
+        MaxSpeed = 5;
+        CurrentSpeed = 0;
+        BaseSpeed = 0;
+        KillSpeed = -3;
+
+    
+
         playerBody = GetComponent<Rigidbody2D>();
 
         waveDetector = Instantiate(WaveDetectorPrefab, transform.position, Quaternion.identity);
@@ -50,7 +65,37 @@ public class PlayerCharacter : MonoBehaviour
 
     void Update()
     {
-        fsm.Update (Time.deltaTime);
+      
+
+        /*Speed management*/
+        //MaxSpeed = 5;
+        if(Input.GetKey(KeyCode.Space))
+        {
+            if(CurrentSpeed < MaxSpeed)
+            {
+                CurrentSpeed += (Time.deltaTime * BoostVelocity);
+                if(CurrentSpeed > MaxSpeed)
+                {
+                    CurrentSpeed = MaxSpeed;
+                }
+            }
+        }
+        CurrentSpeed -= WaterVelocity * Time.deltaTime;
+
+
+        if(CurrentSpeed< KillSpeed)
+        {
+            //GAMEOVER
+            EventManager.Instance.SendEvent(EventType.GameOver, null);
+        }
+        
+       Vector3 v3= transform.position;
+        Debug.Log(v3.x);
+        v3.x = PlayerOffset + CurrentSpeed;
+        transform.position = v3;
+
+
+        fsm.Update(Time.deltaTime);
     }
 
     void FixedUpdate()
