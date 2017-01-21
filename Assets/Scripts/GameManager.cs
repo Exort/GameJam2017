@@ -14,6 +14,7 @@ public class GameManager : BaseSingleton<GameManager>
 
     private void StartGame()
     {
+        CleanUp ();
         PlayerCharacter = Instantiate (PlayerPrefab);
         PlayerCharacter.transform.localPosition = new Vector3(PlayerOffset, 0, 0);
         ChangeLane (2);
