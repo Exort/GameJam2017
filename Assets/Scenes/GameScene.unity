@@ -424,6 +424,18 @@ Prefab:
       value: 
       objectReference: {fileID: 114486980664105406, guid: c4266b08814cff849b59aa64abc57774,
         type: 2}
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: PositiveWaveTemplate
+      value: 
+      objectReference: {fileID: 114486980664105406, guid: c4266b08814cff849b59aa64abc57774,
+        type: 2}
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: NegativeWaveTemplate
+      value: 
+      objectReference: {fileID: 114486980664105406, guid: c4266b08814cff849b59aa64abc57774,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
   m_IsPrefabParent: 0

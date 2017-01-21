@@ -8,6 +8,7 @@ public class LevelManager : BaseSingleton<LevelManager> {
     public Level getNextLevel()
     {
         CurrentLevel++;
+        Debug.Log("Now at level " + CurrentLevel);
         Level ret = new Level(CurrentLevel);
         
         return ret;

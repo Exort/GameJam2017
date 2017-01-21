@@ -18,24 +18,31 @@ public class SpawnerManager : MonoBehaviour {
     }
     // Update is called once per frame
     void Update () {
-
+        if(Input.GetKeyDown(KeyCode.U))
+        {
+            currentLevel = LevelManager.Instance.getNextLevel();
+        }
         if (currentLevel != null)
         {
             List<ObjectInstance> objs = currentLevel.GetObjectsToSpawn(Time.deltaTime);
+           
             foreach (ObjectInstance inst in objs)
             {
-                if (inst.GetType() == typeof(PositiveWave))
+                if (inst is PositiveWave)
                 {
                     Wave obj = Instantiate(PositiveWaveTemplate, GameManager.Lanes[inst.LaneIndex].transform,false);
 
                 }
-                if (inst.GetType() == typeof(NegativeWave))
+                if (inst is NegativeWave)
                 {
                     Wave obj = Instantiate(PositiveWaveTemplate, GameManager.Lanes[inst.LaneIndex].transform,false);
-
+                    obj.MoveSpeed = obj.MoveSpeed * -1;
+                    Vector3 t = obj.transform.position;
+                    t.x *= -1;
+                    obj.transform.position = t;
                 }
             }
-            Debug.Log(objs);
+           
         }
 	}
 }
