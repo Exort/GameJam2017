@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TypeWritter : MonoBehaviour {
@@ -25,6 +26,18 @@ public class TypeWritter : MonoBehaviour {
             txt.text += c;
             yield return new WaitForSeconds(0.125f);
         }
-    }
 
+        while (true)
+        {
+            if (Input.anyKeyDown)
+            {
+                SceneManager.LoadScene("GameScene");
+                yield return null;
+            }
+            else
+            {
+                yield return new WaitForFixedUpdate();
+            }
+        }
+    }
 }
