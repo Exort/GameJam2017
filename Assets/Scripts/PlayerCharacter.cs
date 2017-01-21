@@ -43,7 +43,7 @@ public class PlayerCharacter : MonoBehaviour
         BaseSpeed = 0;
         KillSpeed = -3;
 
-        currentWave = null;
+    
 
         playerBody = GetComponent<Rigidbody2D>();
 
