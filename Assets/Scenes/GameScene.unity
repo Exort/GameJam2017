@@ -392,7 +392,8 @@ Prefab:
         type: 2}
       propertyPath: GameOverScreenPrefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 114906080450569508, guid: b21b2dc4c0aa6ea4cac888c36deff4a9,
+        type: 2}
     - target: {fileID: 114692312790337460, guid: 31b25cfc83d03d344b4c5c7113d750ce,
         type: 2}
       propertyPath: m_Enabled

@@ -35,7 +35,7 @@ public class GameOverView : MonoBehaviour {
             obj.GetComponent<Text>().text = entr.name + " - " + entr.score;
             scoreList.Add(obj);
         }
-        if (score > long.Parse(currentHighScores[currentHighScores.Count - 1].score))
+        if (currentHighScores.Count==0 || score > long.Parse(currentHighScores[currentHighScores.Count - 1].score))
         {
 
             Debug.Log("NEW HIGH SCORE!");

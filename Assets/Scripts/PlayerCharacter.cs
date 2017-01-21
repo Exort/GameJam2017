@@ -4,19 +4,21 @@ using System;
 
 public class PlayerCharacter : MonoBehaviour
 {
-    public float PlayerOffset = -7f;
+  
     public float MaxSpeed;
     public float CurrentSpeed;
     public float BaseSpeed;
-    public float KillSpeed;
-    public float BoostVelocity = 5;
-    public float WaterVelocity = 1;
+    public float KillPosition;
+    public float BoostVelocity = 8;
+    public float WaterVelocity = 5;
+    public float LowestSpeed = -5;
+    public float MaxPosition = 7;
     private enum States
     {
         Standing,
         ChangingLane
     };
-
+    private bool Dead = false;
     public float LaneChangeSpeed = 5f;
     public PlayerWaveDetector WaveDetectorPrefab;
 
@@ -41,10 +43,10 @@ public class PlayerCharacter : MonoBehaviour
     void Start ()
     {
 
-        MaxSpeed = 5;
+        MaxSpeed = 10;
         CurrentSpeed = 0;
         BaseSpeed = 0;
-        KillSpeed = -3;
+        KillPosition = -10;
 
     
 
@@ -73,28 +75,43 @@ public class PlayerCharacter : MonoBehaviour
         {
             if(CurrentSpeed < MaxSpeed)
             {
-                CurrentSpeed += (Time.deltaTime * BoostVelocity);
+                CurrentSpeed += ( BoostVelocity);
                 if(CurrentSpeed > MaxSpeed)
                 {
                     CurrentSpeed = MaxSpeed;
                 }
             }
         }
-        CurrentSpeed -= WaterVelocity * Time.deltaTime;
+        CurrentSpeed -= WaterVelocity;
+        if(CurrentSpeed < LowestSpeed)
+        {
+            CurrentSpeed = LowestSpeed;
+        }
+        Debug.Log(CurrentSpeed + " - " + playerBody.position.x);
+        if (playerBody.position.x >= MaxPosition && CurrentSpeed >0)
+        {
 
 
-        if(CurrentSpeed< KillSpeed)
+            CurrentSpeed = 0;
+        }
+        playerBody.velocity = new Vector2(CurrentSpeed, 0);
+        
+        if(playerBody.position.x < KillPosition)
         {
             //GAMEOVER
-            EventManager.Instance.SendEvent(EventType.GameOver, null);
+            if (!Dead)
+            {
+                Dead = true;
+                EventManager.Instance.SendEvent(EventType.GameOver, null);
+            }
         }
         
-       Vector3 v3= transform.position;
+      /* Vector3 v3= playerBody.position ;
         Debug.Log(v3.x);
         v3.x = PlayerOffset + CurrentSpeed;
-        transform.position = v3;
+        playerBody.position = v3;
 
-
+    */
         fsm.Update(Time.deltaTime);
     }
 
