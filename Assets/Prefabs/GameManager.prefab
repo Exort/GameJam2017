@@ -131,7 +131,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4534140541954944}
-  - component: {fileID: 212182153652387888}
+  - component: {fileID: 33334492946613386}
+  - component: {fileID: 23477227848680726}
+  - component: {fileID: 114474258463986882}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -244,7 +246,7 @@ Transform:
   m_GameObject: {fileID: 1962007311993992}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 18, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 4103165091381372}
   m_RootOrder: 0
@@ -280,6 +282,56 @@ Transform:
   m_Father: {fileID: 4103165091381372}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &23477227848680726
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1962007311993992}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 2f8849f333051f441b9c0f165d9a5df1, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &33334492946613386
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1962007311993992}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114474258463986882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1962007311993992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16888f319d708db4ca6a0a53afc796a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScrollSpeed: 0
 --- !u!114 &114594478330121478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -291,6 +343,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa5be195a82d72b4d88753e6f7bfadca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameManager: {fileID: 114692312790337460}
+  PositiveWaveTemplate: {fileID: 114486980664105406, guid: c4266b08814cff849b59aa64abc57774,
+    type: 2}
+  NegativeWaveTemplate: {fileID: 114486980664105406, guid: c4266b08814cff849b59aa64abc57774,
+    type: 2}
 --- !u!114 &114692312790337460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -302,9 +359,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4d0f43cde6bd5459fe181344eef890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ScrollingBackground: {fileID: 114474258463986882}
   GameOverScreenPrefab: {fileID: 114906080450569508, guid: b21b2dc4c0aa6ea4cac888c36deff4a9,
     type: 2}
   GameUI: {fileID: 0}
+  Spawner: {fileID: 114594478330121478}
   Lanes:
   - {fileID: 1182858235118886}
   - {fileID: 1749733453734276}
@@ -314,42 +373,8 @@ MonoBehaviour:
   PlayerPrefab: {fileID: 114996582513655874, guid: fa029b386913bd146a591715a176f0ff,
     type: 2}
   PlayerOffset: -7
+  ScrollIncrement: 0.25
   PlayerName: 
---- !u!212 &212182153652387888
-SpriteRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1962007311993992}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2b526971e974f164fae2c066d1853846, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
 --- !u!212 &212236601190036484
 SpriteRenderer:
   m_ObjectHideFlags: 1

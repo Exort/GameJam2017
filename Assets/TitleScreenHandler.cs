@@ -23,6 +23,7 @@ public class TitleScreenHandler : MonoBehaviour {
         {
             EventManager.Instance.SendEvent(EventType.StartGame, null);
             DestroyImmediate(this.gameObject);
+            return;
         }
 
         blinkTimer += Time.deltaTime;

@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class GameManager : BaseSingleton<GameManager> , EventListener
 {
+    public ScrollHorizontal ScrollingBackground;
     public GameOverView GameOverScreenPrefab;
     public GameUI GameUI;
     public SpawnerManager Spawner;
     public List<GameObject> Lanes;
     public PlayerCharacter PlayerPrefab;
+
     public float PlayerOffset = -2.25f;
+    public float ScrollIncrement = 0.25f;
 
     public string PlayerName;
 
@@ -53,6 +56,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         {
             _multiplier = value;
             GameUI.MultiplierText.text = "X" + _multiplier.ToString();
+            ScrollingBackground.ScrollSpeed = ScrollIncrement * Multiplier;
         }
     }
 
@@ -91,11 +95,16 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         if (PlayerCharacter != null)
         {
             DestroyImmediate(PlayerCharacter.gameObject);
+            PlayerCharacter.EnteredWave -= OnPlayerCharacterEnteredWave;
             PlayerCharacter = null;
         }
 
         _level = 0;
         _multiplier = 0;
+        if (ScrollingBackground != null)
+        {
+            ScrollingBackground.ScrollSpeed = 0;
+        }
         _score = 0;
 
         GameUI.Reset();
@@ -186,6 +195,8 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
 
                     PlayerName = "MTL";
                     PlayerCharacter = Instantiate(PlayerPrefab, new Vector3(PlayerOffset, 0f), Quaternion.identity);
+                    PlayerCharacter.EnteredWave += OnPlayerCharacterEnteredWave;
+
                     ChangeLane(2);
                     break;
                 }
@@ -206,6 +217,19 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
                 {
                     break;
                 }
+        }
+    }
+
+    private void OnPlayerCharacterEnteredWave(Wave wave)
+    {
+        if(wave.Source is PositiveWave)
+        {
+            Multiplier++;
+            Score += wave.Source.PointValue;
+        }
+        else
+        {
+            Multiplier = 1;
         }
     }
 

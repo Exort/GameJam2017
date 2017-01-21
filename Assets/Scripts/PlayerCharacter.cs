@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Assets.Scripts;
+using System;
 
 public class PlayerCharacter : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class PlayerCharacter : MonoBehaviour
 
     private FSM fsm = new FSM();
 
+    public Action<Wave> EnteredWave;
+
     public void ResetWave()
     {
         waveDetector.ResetWave();
@@ -31,6 +34,7 @@ public class PlayerCharacter : MonoBehaviour
 
         waveDetector = Instantiate(WaveDetectorPrefab, transform.position, Quaternion.identity);
         waveDetector.PlayerBody = playerBody;
+        waveDetector.EnteredWave += onEnteredWave;
     }
 
     void Awake()
@@ -111,6 +115,15 @@ public class PlayerCharacter : MonoBehaviour
             waveDetector.Position = targetPosition;
 
             fsm.ChangeState ((int)States.Standing);
+        }
+    }
+
+    private void onEnteredWave(Wave wave)
+    {
+        var handler = EnteredWave;
+        if (handler != null)
+        {
+            handler.Invoke(wave);
         }
     }
 }

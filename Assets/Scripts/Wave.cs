@@ -3,6 +3,7 @@
 [ExecuteInEditMode]
 public class Wave : MonoBehaviour
 {
+    public ObjectInstance Source;
     public int WaveWidth;
     public int WaveHeight;
     public AnimationCurve WaveCurve;

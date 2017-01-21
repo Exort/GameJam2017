@@ -6,7 +6,7 @@ public class Level
 {
     public static System.Random r = new System.Random();
     public int LevelNumber;
-    public decimal SpeedMultiplier;
+    public float SpeedMultiplier;
      public float PositiveWeight;
      public float NegativeWeight;
     private float Delay = 0;
@@ -19,14 +19,27 @@ public class Level
 
     public List<WeightedType> NegativeObjectType = new List<WeightedType>();
     public List<WeightedType> PositiveObjectType = new List<WeightedType>();
-
+    public void NextLevel()
+    {
+       // if (LevelNumber != 10)
+        {
+            LevelNumber++;
+            InitLevel();
+        }
+    }
+    private void InitLevel()
+    {
+        
+        SpeedMultiplier = (float)LevelNumber / (float)10.0;
+        ShuffleObjectType();
+        PositiveWeight = ((float)1 / (float)LevelNumber) * 100;
+        NegativeWeight = 100 - PositiveWeight;
+ 
+    }
     public Level(int LvlNumber)
     {
         LevelNumber = LvlNumber;
-        SpeedMultiplier = LevelNumber / 10;
-        ShuffleObjectType();
-        NegativeWeight = (1 / LevelNumber)*100;
-        PositiveWeight = 100 - NegativeWeight;
+        InitLevel();
     }
     private void ShuffleObjectType()
     {
@@ -35,11 +48,11 @@ public class Level
         PositiveWaveType.Add(new WeightedType(typeof(PositiveWave),1));
 
         NegativeObjectType.Clear();
-        NegativeObjectType.Add(new WeightedType(typeof(NegativeWave), r.Next(10)));
-        NegativeObjectType.Add(new WeightedType(typeof(FireWall), r.Next(2)*LevelNumber));
+        NegativeObjectType.Add(new WeightedType(typeof(NegativeWave), r.Next(1,10)));
+        NegativeObjectType.Add(new WeightedType(typeof(FireWall), r.Next(1,2)*LevelNumber));
 
         PositiveObjectType.Clear();
-        PositiveObjectType.Add(new WeightedType(typeof(PositiveWave), r.Next(10)));
+        PositiveObjectType.Add(new WeightedType(typeof(PositiveWave), r.Next(1,10)));
 
     }
     private static System.Type GetTypeToSpawn(List<WeightedType> typeList)
@@ -50,7 +63,10 @@ public class Level
             totalCount += wt.Weight;
         }
 
-     
+        if(totalCount < 1)
+        {
+            totalCount = 1;
+        }
         int bigbigWinner = r.Next(1, totalCount);
 
         System.Type retType = null;
@@ -61,10 +77,14 @@ public class Level
             if(bigbigWinner <= currentIndex)
             {
                 retType = wt.theType;
+                
                 break;
             }
         }
-
+        if(retType==null)
+        {
+            Debug.Log("Nope");
+        }
 
         return retType;
 
@@ -77,16 +97,26 @@ public class Level
         {
             minMSInterval = 3000 - (LevelNumber*1000);
         }
+        if(minMSInterval < 0 )
+        {
+            minMSInterval = 0;
+        }
         int maxMSInterval = 5000;
         if(LevelNumber>3)
         {
             maxMSInterval = maxMSInterval - ((LevelNumber - 3) * 500);
+           
+        }
+        if (maxMSInterval < 100)
+        {
+            maxMSInterval =100;
         }
         int found = r.Next(minMSInterval, maxMSInterval);
-        return found/1000;
+        return (float)found/(float)1000;
     }
     private void FillObjects(float secondsToFill)
     {
+     
         List<ObjectInstance> toAdd = new List<ObjectInstance>();
         float endTime = Delay + secondsToFill;
         for (float t = Delay; t < endTime; t += SecondsBetweenPositiveWave)
@@ -97,7 +127,7 @@ public class Level
             toAdd.Add(oi);
         }
         float currentTime = Delay + getDelayBetweenObject();
-    
+      
         while (currentTime < endTime)
         {
            int percent= r.Next(1, 100);
@@ -108,14 +138,19 @@ public class Level
             }
             else
             {
-                toInstanciate = GetTypeToSpawn(PositiveObjectType);
+                /*Should be positive...*/
+                toInstanciate = GetTypeToSpawn(NegativeObjectType);
+            }
+            if(toInstanciate == null)
+            {
+                Debug.Log("test");
             }
             ObjectInstance oi = (ObjectInstance)System.Activator.CreateInstance(toInstanciate);
             oi.Timestamp = currentTime;
             toAdd.Add(oi);
             currentTime += getDelayBetweenObject();
         }
-
+    
 
 
         toAdd.Sort(delegate (ObjectInstance o1, ObjectInstance o2)
@@ -128,9 +163,10 @@ public class Level
     }
     public List<ObjectInstance> GetObjectsToSpawn(float delaySinceLastCall)
     {
-       if(Delay + delaySinceLastCall > ObjectFilledUpTo - 30)
+       
+        if (Delay + delaySinceLastCall > ObjectFilledUpTo - 2)
         {
-            FillObjects(60);
+            FillObjects(4);
         }
      //   Delay += delaySinceLastCall;
         List<ObjectInstance> ret = new List<ObjectInstance>();
@@ -176,7 +212,7 @@ public abstract class ObjectInstance
     private void SelectRandomLane()
     {
       
-        LaneIndex = Level.r.Next(0, NbLanes - 1);
+        LaneIndex = Level.r.Next(0, NbLanes );
     }
 }
 public class PositiveWave:ObjectInstance

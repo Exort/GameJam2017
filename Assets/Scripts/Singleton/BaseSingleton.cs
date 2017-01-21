@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public abstract class BaseSingleton<T> : MonoBehaviour 
-    where T : class, new()
+    where T : MonoBehaviour
 {
     protected static T _instance;
 
@@ -11,7 +11,8 @@ public abstract class BaseSingleton<T> : MonoBehaviour
         {
             if(_instance == null)
             {
-                _instance = new T ();
+                var gameObject = new GameObject ();
+                _instance = gameObject.AddComponent<T>();
             }
             return _instance;
         }

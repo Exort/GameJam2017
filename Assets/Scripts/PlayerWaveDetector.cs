@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,6 +42,8 @@ public class PlayerWaveDetector : MonoBehaviour
             myRigidBody.position = new Vector2(myRigidBody.position.x, value);
         }
     }
+
+    public Action<Wave> EnteredWave;
 
     void Start ()
     {
@@ -94,6 +97,12 @@ public class PlayerWaveDetector : MonoBehaviour
                 startY = playerBody.position.y;
 
                 Debug.Log("Entering wave");
+
+                var handler = EnteredWave;
+                if (handler != null)
+                {
+                    handler.Invoke(currentWave);
+                }
             }
         }
     }
