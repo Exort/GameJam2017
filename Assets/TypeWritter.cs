@@ -1,43 +1,48 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class TypeWritter : MonoBehaviour {
+public class TypeWritter : MonoBehaviour
+{
+    public float WriteDelay = 0.125f;
 
-    Text txt;
-    string story;
+    private Text txt;
+    private string story;
+    private int typeIndex = 0;
+    private float writerTimer;
 
     void Awake()
     {
         txt = GetComponent<Text>();
+    }
+
+    void Start()
+    {
         story = txt.text;
         txt.text = "";
 
-        // TODO: add optional delay when to start
-        StartCoroutine("PlayText");
+        typeIndex = 0;
+        writerTimer = 0f;
     }
 
-    IEnumerator PlayText()
+    void Update()
     {
-        foreach (char c in story)
+        if (typeIndex < story.Length)
         {
-            txt.text += c;
-            yield return new WaitForSeconds(0.125f);
+            writerTimer += Time.deltaTime;
+
+            if (writerTimer >= WriteDelay)
+            {
+                txt.text += story[typeIndex];
+                typeIndex++;
+
+                writerTimer = 0f;
+            }
         }
 
-        while (true)
+        if (Input.anyKeyDown)
         {
-            if (Input.anyKeyDown)
-            {
-                SceneManager.LoadScene("GameScene");
-                yield return null;
-            }
-            else
-            {
-                yield return new WaitForFixedUpdate();
-            }
+            SceneManager.LoadScene("GameScene");
         }
     }
 }
