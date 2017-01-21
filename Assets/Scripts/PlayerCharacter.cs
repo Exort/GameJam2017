@@ -15,6 +15,7 @@ public class PlayerCharacter : MonoBehaviour
     private Wave currentWave;
 
     private Rigidbody2D playerBody;
+    private BoxCollider2D playerCollider;
     private SpriteRenderer spriteRender;
 
     private float _targetY;
@@ -31,6 +32,8 @@ public class PlayerCharacter : MonoBehaviour
     {
         currentWave = null;
         playerBody = GetComponent<Rigidbody2D>();
+        playerCollider = GetComponent<BoxCollider2D>();
+
         spriteRender = GetComponentInChildren<SpriteRenderer>();
     }
 
@@ -59,6 +62,7 @@ public class PlayerCharacter : MonoBehaviour
                 Debug.Log("Leaving wave");
                 playerBody.position = new Vector2(playerBody.position.x, startY);
                 currentWave = null;
+                playerCollider.enabled = true;
             }
         }
     }
@@ -70,6 +74,7 @@ public class PlayerCharacter : MonoBehaviour
         {
             if ((currentWave != null && currentWave != wave) || currentWave == null)
             {
+                playerCollider.enabled = false;
                 currentWave = wave;
 
                 startY = playerBody.position.y;
