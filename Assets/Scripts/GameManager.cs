@@ -12,7 +12,6 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
     public List<GameObject> Lanes;
     public PlayerCharacter PlayerPrefab;
 
-    public float PlayerOffset = -2.25f;
     public float ScrollIncrement = 0.25f;
 
     public string PlayerName;
@@ -112,11 +111,6 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
     {
         fsm.Update(Time.deltaTime);
 
-        //todo use input manager
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            GameOver();
-        }
     }
 
     void FixedUpdate()
@@ -129,6 +123,11 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         if (tp == EventType.StartGame)
         {
             fsm.ChangeState((int)States.Start);
+        }
+        if(tp == EventType.GameOver)
+        {
+            fsm.ChangeState((int)States.GameOver);
+            GameOver();
         }
     }
 
@@ -190,12 +189,13 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
                     Level = 1;
 
                     PlayerName = "MTL";
-                    PlayerCharacter = Instantiate(PlayerPrefab, new Vector3(PlayerOffset, 0f), Quaternion.identity);
+                    PlayerCharacter = Instantiate(PlayerPrefab, new Vector3(0f, 0f), Quaternion.identity);
                     ChangeLane(2);
                     break;
                 }
             case StateMethod.Update:
                 {
+                   
                     if (Input.GetKeyDown(KeyCode.UpArrow))
                     {
                         ChangeLane(Mathf.Max(0, CurrentLane - 1));
