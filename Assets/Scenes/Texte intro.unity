@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 878521411}
   - component: {fileID: 878521413}
   - component: {fileID: 878521412}
+  - component: {fileID: 878521414}
   m_Layer: 5
   m_Name: Texte intro
   m_TagString: Untagged
@@ -327,32 +328,43 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 2e2727d11600d7a4ca64ad884a195f7d, type: 3}
-    m_FontSize: 14
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 1
     m_AlignByGeometry: 1
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1.2
-  m_Text: 'YOU ARE THE CYBER  RIDER.
+  m_Text: 'You are the cyber  rider.
 
 
-    YOUR JOB IS TO  DELIVER  DATA  PACKAGES
+    Your job  is to  deliver  data  packages
 
-    ALL OVER THE CYBER WORLD.
+    all over the cyber  world.
 
 
-    YOUR MISSION IS TO DO IT WITH  STYLE.'
+    Your mission is to do it with  style.'
 --- !u!222 &878521413
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 878521410}
+--- !u!114 &878521414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 878521410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c03eccd007217e44cb53791a19a6ff05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1256261888
 GameObject:
   m_ObjectHideFlags: 0
