@@ -81,12 +81,13 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         fsm.AddState(StateStart);
         fsm.AddState(StateActive);
         fsm.AddState(StateChangeLane);
+        fsm.AddState(StateGameOver);
     }
 
     void Start()
     {
         fsm.ChangeState((int)States.Title);
-
+        HighScoreTool.Instance.StartThread();
         EventManager.Instance.Register(this);
     }
 
@@ -117,10 +118,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         fsm.Update(Time.deltaTime);
 
         //todo use input manager
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            GameOver();
-        }
+        
     }
 
     void FixedUpdate()
@@ -133,6 +131,11 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         if (tp == EventType.StartGame)
         {
             fsm.ChangeState((int)States.Start);
+        }
+        if(tp == EventType.GameOver)
+        {
+            fsm.ChangeState((int)States.GameOver);
+            GameOver();
         }
     }
 
