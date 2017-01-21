@@ -7,7 +7,8 @@ using System.Text;
     public enum EventType
     {
         StartGame,
-        GameOver
+        GameOver,
+        ApplicationExit
     }
     public interface EventListener
     {

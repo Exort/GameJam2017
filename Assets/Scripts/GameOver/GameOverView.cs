@@ -16,21 +16,20 @@ public class GameOverView : MonoBehaviour {
     }
     private void SendHighScore(long score)
     {
-
-        currentHighScores = HighScoreTool.SendHighScore("MTL", score);
+        HighScoreTool.Instance.SendHighScore("MTL", score);
+       // currentHighScores = HighScoreTool.SendHighScore("MTL", score);
     }
     public void Fillout(long score)
     {
 
-         currentHighScores = HighScoreTool.FetchHighScores();
-       
+      
         while(ScoreContainer.childCount != 0)
         {
             Destroy(ScoreContainer.GetChild(0));
         }
 
         /*DISPLAY HIGH SCORE SCREEN*/
-        foreach (HighScoreTool.HighScoreEntry entr in currentHighScores)
+        foreach (HighScoreTool.HighScoreEntry entr in HighScoreTool.Instance.highScores)
         {
             GameObject obj = Instantiate(ScoreEntryObject, ScoreContainer);
             obj.GetComponent<Text>().text = entr.name + " - " + entr.score;

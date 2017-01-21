@@ -6,7 +6,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
 {
     public GameOverView GameOverScreenPrefab;
     public GameUI GameUI;
-
+    public SpawnerManager SpawnerManager;
     public List<GameObject> Lanes;
     public PlayerCharacter PlayerPrefab;
     public float PlayerOffset = -2.25f;
@@ -62,6 +62,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
     void Start()
     {
         Reset ();
+        HighScoreTool.Instance.StartThread();
         EventManager.Instance.Register(this);
     }
     public void OnMessage(EventType tp, object param)

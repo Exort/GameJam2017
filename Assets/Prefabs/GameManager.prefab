@@ -107,6 +107,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1927403625675828
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4782736042721360}
+  - component: {fileID: 114594478330121478}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1962007311993992
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,6 +167,7 @@ Transform:
   m_Children:
   - {fileID: 4534140541954944}
   - {fileID: 4944263206601946}
+  - {fileID: 4782736042721360}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -232,6 +249,19 @@ Transform:
   m_Father: {fileID: 4103165091381372}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4782736042721360
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1927403625675828}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4103165091381372}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4944263206601946
 Transform:
   m_ObjectHideFlags: 1
@@ -250,6 +280,17 @@ Transform:
   m_Father: {fileID: 4103165091381372}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114594478330121478
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1927403625675828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa5be195a82d72b4d88753e6f7bfadca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114692312790337460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -261,6 +302,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4d0f43cde6bd5459fe181344eef890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameOverScreenPrefab: {fileID: 114906080450569508, guid: b21b2dc4c0aa6ea4cac888c36deff4a9,
+    type: 2}
   GameUI: {fileID: 0}
   Lanes:
   - {fileID: 1182858235118886}
@@ -272,17 +315,6 @@ MonoBehaviour:
     type: 2}
   PlayerOffset: -7
   PlayerName: 
-  currentHighScores:
-  - name: MTL
-    score: 5
-  - name: ELI
-    score: 3
-  - name: Elie
-    score: 2
-  - name: 
-    score: 1
-  - name: ELI
-    score: 1
 --- !u!212 &212182153652387888
 SpriteRenderer:
   m_ObjectHideFlags: 1

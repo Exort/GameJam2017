@@ -1,10 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
+public class HighScoreTool:BaseSingleton<HighScoreTool>,EventListener {
+    private DateTime lastHighScoreRefresh;
+    private int MinutesBetweenRefresh = 5;
+    public List<HighScoreEntry> highScores = new List<HighScoreEntry>();
+    public HighScoreTool()
+    {
 
-public class HighScoreTool {
-
+        
+    }
+    public void StartThread()
+    {
+        bgw = new System.Threading.Thread(new System.Threading.ThreadStart(BgkThread));
+        bgw.Start();
+    }
+    private bool Quitting = false;
+    private void BgkThread()
+    {
+        while(!Quitting)
+        {
+            if(lastHighScoreRefresh == null || DateTime.Now.Subtract(lastHighScoreRefresh).TotalMinutes > MinutesBetweenRefresh)
+            {
+                System.Net.WebClient cli = new System.Net.WebClient();
+                string myJSON = cli.DownloadString("http://glacial-earth-23991.herokuapp.com/list");
+                HighScoreList hl = JsonUtility.FromJson<HighScoreList>(myJSON);
+                highScores = hl.data;
+                lastHighScoreRefresh = DateTime.Now;
+            }
+            System.Threading.Thread.Sleep(100);
+           
+        }
+    }
+    System.Threading.Thread bgw;
+    public void OnMessage(EventType tp, object param)
+    {
+        if(tp == EventType.ApplicationExit)
+        {
+            Quitting = true;
+            bgw.Abort();
+        }
+    }
     [System.Serializable]
     public class HighScoreEntry
     {
@@ -22,15 +60,8 @@ public class HighScoreTool {
     {
         public List<HighScoreEntry> data;
     }
-    public static List<HighScoreEntry> FetchHighScores()
-    {
-        System.Net.WebClient cli = new System.Net.WebClient();
-        string myJSON = cli.DownloadString("http://glacial-earth-23991.herokuapp.com/list");
-        HighScoreList hl = JsonUtility.FromJson<HighScoreList>(myJSON);
-
-        return hl.data;
-    }
-    public static List<HighScoreEntry> SendHighScore(string name, long score)
+   
+    public void SendHighScore(string name, long score)
     {
         ProperHighScoreEntry phs = new ProperHighScoreEntry();
         phs.name = name;
@@ -45,6 +76,8 @@ public class HighScoreTool {
         string answer = rdr.ReadToEnd();
         Debug.Log(answer);
         rdr.Close();
-        return FetchHighScores();
+        lastHighScoreRefresh = DateTime.MinValue;
+
+
     }
 }
