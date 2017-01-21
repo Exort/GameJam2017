@@ -261,6 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4d0f43cde6bd5459fe181344eef890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameUI: {fileID: 0}
   Lanes:
   - {fileID: 1182858235118886}
   - {fileID: 1749733453734276}
@@ -270,6 +271,18 @@ MonoBehaviour:
   PlayerPrefab: {fileID: 114996582513655874, guid: fa029b386913bd146a591715a176f0ff,
     type: 2}
   PlayerOffset: -7
+  PlayerName: 
+  currentHighScores:
+  - name: MTL
+    score: 5
+  - name: ELI
+    score: 3
+  - name: Elie
+    score: 2
+  - name: 
+    score: 1
+  - name: ELI
+    score: 1
 --- !u!212 &212182153652387888
 SpriteRenderer:
   m_ObjectHideFlags: 1
