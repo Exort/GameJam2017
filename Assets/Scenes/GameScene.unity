@@ -405,8 +405,25 @@ Prefab:
       objectReference: {fileID: 1669117693}
     - target: {fileID: 1927403625675828, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: GameManager
+      value: 
+      objectReference: {fileID: 1669117692}
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: PositiveWave
+      value: 
+      objectReference: {fileID: 114486980664105406, guid: c4266b08814cff849b59aa64abc57774,
+        type: 2}
+    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: NegativeWave
+      value: 
+      objectReference: {fileID: 114486980664105406, guid: c4266b08814cff849b59aa64abc57774,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
   m_IsPrefabParent: 0

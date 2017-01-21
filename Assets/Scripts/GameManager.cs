@@ -174,7 +174,9 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
             case StateMethod.Enter:
                 {
                     Reset();
-
+                    Spawner.enabled = true;
+                    
+                    Spawner.Init();
                     Score = 0;
                     Multiplier = 1;
                     Level = 1;

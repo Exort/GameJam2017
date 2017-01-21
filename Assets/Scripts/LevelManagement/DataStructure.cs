@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Level
 {
+    public static System.Random r = new System.Random();
     public int LevelNumber;
     public decimal SpeedMultiplier;
      public float PositiveWeight;
      public float NegativeWeight;
     private float Delay = 0;
     private float ObjectFilledUpTo = 0;
-    public float SecondsBetweenPositiveWave = 1;
+    public float SecondsBetweenPositiveWave = 1f;
     
     public List<ObjectInstance> theObjects = new List<ObjectInstance>();
 
@@ -29,8 +30,7 @@ public class Level
     }
     private void ShuffleObjectType()
     {
-        System.Random r = new System.Random();
-    
+       
         PositiveWaveType.Clear();
         PositiveWaveType.Add(new WeightedType(typeof(PositiveWave),1));
 
@@ -50,7 +50,7 @@ public class Level
             totalCount += wt.Weight;
         }
 
-        System.Random r = new System.Random();
+     
         int bigbigWinner = r.Next(1, totalCount);
 
         System.Type retType = null;
@@ -71,8 +71,7 @@ public class Level
     }
     private float getDelayBetweenObject()
     {
-        System.Random r = new System.Random();
-
+      
         int minMSInterval = 0;
         if(LevelNumber < 3)
         {
@@ -98,7 +97,7 @@ public class Level
             toAdd.Add(oi);
         }
         float currentTime = Delay + getDelayBetweenObject();
-        System.Random r = new System.Random();
+    
         while (currentTime < endTime)
         {
            int percent= r.Next(1, 100);
@@ -146,6 +145,7 @@ public class Level
         {
             theObjects.Remove(o);
         }
+        Delay += delaySinceLastCall;
         return ret;
     }
     
@@ -175,8 +175,8 @@ public abstract class ObjectInstance
     }
     private void SelectRandomLane()
     {
-        System.Random r = new System.Random();
-        LaneIndex = r.Next(0, NbLanes - 1);
+      
+        LaneIndex = Level.r.Next(0, NbLanes - 1);
     }
 }
 public class PositiveWave:ObjectInstance
