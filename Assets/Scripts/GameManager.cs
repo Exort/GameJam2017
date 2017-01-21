@@ -95,6 +95,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         if (PlayerCharacter != null)
         {
             DestroyImmediate(PlayerCharacter.gameObject);
+            PlayerCharacter.EnteredWave -= OnPlayerCharacterEnteredWave;
             PlayerCharacter = null;
         }
 
@@ -191,6 +192,8 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
 
                     PlayerName = "MTL";
                     PlayerCharacter = Instantiate(PlayerPrefab, new Vector3(PlayerOffset, 0f), Quaternion.identity);
+                    PlayerCharacter.EnteredWave += OnPlayerCharacterEnteredWave;
+
                     ChangeLane(2);
                     break;
                 }
@@ -211,6 +214,19 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
                 {
                     break;
                 }
+        }
+    }
+
+    private void OnPlayerCharacterEnteredWave(Wave wave)
+    {
+        if(wave.Source is PositiveWave)
+        {
+            Multiplier++;
+            Score += wave.Source.PointValue;
+        }
+        else
+        {
+            Multiplier = 1;
         }
     }
 

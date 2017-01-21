@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Assets.Scripts;
+using System;
 
 public class PlayerCharacter : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class PlayerCharacter : MonoBehaviour
     private float _animationTime;
 
     private FSM fsm = new FSM();
+
+    public event Action<Wave> EnteredWave = delegate {};
 
     public void ResetWave()
     {
@@ -79,6 +82,7 @@ public class PlayerCharacter : MonoBehaviour
 
                 startY = playerBody.position.y;
 
+                EnteredWave (wave);
           //      Debug.Log("Entering wave");
             }
         }
