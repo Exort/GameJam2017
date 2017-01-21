@@ -92,9 +92,9 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 2e2727d11600d7a4ca64ad884a195f7d, type: 3}
+  m_Material: {fileID: 0}
   m_Color: {r: 0.359, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   theUi: {fileID: 0}
   BlinkTime: 0.4
-  AnyKeyComponent: {fileID: 114129722903414586}
+  AnyKeyComponent: {fileID: 0}
 --- !u!114 &114606376745422450
 MonoBehaviour:
   m_ObjectHideFlags: 1
