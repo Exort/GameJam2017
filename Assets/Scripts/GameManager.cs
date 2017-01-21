@@ -12,6 +12,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
     public List<GameObject> Lanes;
     public PlayerCharacter PlayerPrefab;
 
+    public float PlayerOffset = -2.25f;
     public float ScrollIncrement = 0.25f;
 
     public string PlayerName;
@@ -94,12 +95,16 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         if (PlayerCharacter != null)
         {
             DestroyImmediate(PlayerCharacter.gameObject);
+            PlayerCharacter.EnteredWave -= OnPlayerCharacterEnteredWave;
             PlayerCharacter = null;
         }
 
         _level = 0;
         _multiplier = 0;
-        ScrollingBackground.ScrollSpeed = 0;
+        if (ScrollingBackground != null)
+        {
+            ScrollingBackground.ScrollSpeed = 0;
+        }
         _score = 0;
 
         GameUI.Reset();
@@ -111,6 +116,11 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
     {
         fsm.Update(Time.deltaTime);
 
+        //todo use input manager
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            GameOver();
+        }
     }
 
     void FixedUpdate()
@@ -123,11 +133,6 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         if (tp == EventType.StartGame)
         {
             fsm.ChangeState((int)States.Start);
-        }
-        if(tp == EventType.GameOver)
-        {
-            fsm.ChangeState((int)States.GameOver);
-            GameOver();
         }
     }
 
@@ -165,8 +170,8 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
                 break;
             case StateMethod.Update:
                 {
-                fsm.ChangeState((int)States.Active);
-                break;
+                    fsm.ChangeState((int)States.Active);
+                    break;
                 }
             case StateMethod.Exit:
                 Spawner.enabled = false;
@@ -189,13 +194,14 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
                     Level = 1;
 
                     PlayerName = "MTL";
-                    PlayerCharacter = Instantiate(PlayerPrefab, new Vector3(0f, 0f), Quaternion.identity);
+                    PlayerCharacter = Instantiate(PlayerPrefab, new Vector3(PlayerOffset, 0f), Quaternion.identity);
+                    PlayerCharacter.EnteredWave += OnPlayerCharacterEnteredWave;
+
                     ChangeLane(2);
                     break;
                 }
             case StateMethod.Update:
                 {
-                   
                     if (Input.GetKeyDown(KeyCode.UpArrow))
                     {
                         ChangeLane(Mathf.Max(0, CurrentLane - 1));
@@ -211,6 +217,19 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
                 {
                     break;
                 }
+        }
+    }
+
+    private void OnPlayerCharacterEnteredWave(Wave wave)
+    {
+        if(wave.Source is PositiveWave)
+        {
+            Multiplier++;
+            Score += wave.Source.PointValue;
+        }
+        else
+        {
+            Multiplier = 1;
         }
     }
 
