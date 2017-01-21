@@ -11,6 +11,10 @@ public class SpawnerManager : MonoBehaviour {
 	void Start () {
 		
 	}
+    public void NextLevel()
+    {
+        currentLevel.NextLevel();
+    }
     public void Init()
     {
         currentLevel = new Level(1);
@@ -22,6 +26,7 @@ public class SpawnerManager : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.U))
         {
             currentLevel.NextLevel();
+            GameManager.GameUI.LevelText.text = "Level " + currentLevel.LevelNumber.ToString();
         }
         if (currentLevel != null)
         {
