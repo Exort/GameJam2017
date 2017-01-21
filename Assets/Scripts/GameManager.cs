@@ -87,7 +87,7 @@ public class GameManager : BaseSingleton<GameManager>
         GameOverView gv = Instantiate(GameOverScreenPrefab);
         gv.Fillout(Score);
     }
-
+    
     private void ChangeLane(int laneIndex)
     {
         if(laneIndex != CurrentLane)

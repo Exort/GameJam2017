@@ -193,6 +193,8 @@ MonoBehaviour:
   ScoreContainer: {fileID: 224467303429554470}
   ScoreEntryObject: {fileID: 1457676363444076, guid: a692c6f03d01bc64aa6cad151c45050f,
     type: 2}
+  EnterYourNameTemplate: {fileID: 114728748674458586, guid: 0d84ba3978a7d8241bb84d932b7dba09,
+    type: 2}
   currentHighScores: []
 --- !u!114 &114952329052000798
 MonoBehaviour:
