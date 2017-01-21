@@ -37,15 +37,14 @@ public class PlayerCharacter : MonoBehaviour
 
     void Start ()
     {
-<<<<<<< HEAD
+
         MaxSpeed = 5;
         CurrentSpeed = 0;
         BaseSpeed = 0;
         KillSpeed = -3;
 
         currentWave = null;
-=======
->>>>>>> a71a1a5d4e44781d310664b89d44486e8c705e28
+
         playerBody = GetComponent<Rigidbody2D>();
 
         waveDetector = Instantiate(WaveDetectorPrefab, transform.position, Quaternion.identity);
