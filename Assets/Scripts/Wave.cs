@@ -3,13 +3,15 @@
 [ExecuteInEditMode]
 public class Wave : MonoBehaviour
 {
+    public float HighestPoint { get; set; }
+    private static System.Random r = new System.Random();
     public ObjectInstance Source;
     public int WaveWidth;
     public int WaveHeight;
-    public AnimationCurve WaveCurve;
+    public System.Collections.Generic.List<AnimationCurve> WaveCurves;
     public Color LineColor;
     public float MoveSpeed;
-
+    public AnimationCurve CurrentCurve;
     public float ScreenWaveWidth
     {
         get
@@ -32,6 +34,17 @@ public class Wave : MonoBehaviour
 
     void OnEnable()
     {
+        HighestPoint = 0;
+        int theIndex = r.Next(0, WaveCurves.Count);
+        CurrentCurve = WaveCurves[theIndex];
+        foreach(Keyframe k in CurrentCurve.keys)
+        {
+            if(k.value > HighestPoint)
+            {
+                HighestPoint = k.value;
+            }
+        }
+       
         var spriteRenderer = GetComponent<SpriteRenderer>();
 
         boxCollider = GetComponent<BoxCollider2D>();
@@ -48,8 +61,8 @@ public class Wave : MonoBehaviour
 
         for (int width = 0; width < WaveWidth - 1; ++width)
         {
-            float startCurvePoint = WaveCurve.Evaluate((float)width / (float)WaveWidth) * (float)WaveHeight;
-            float endCurvePoint = WaveCurve.Evaluate((float)(width + 1) / (float)WaveWidth) * (float)WaveHeight;
+            float startCurvePoint = CurrentCurve.Evaluate((float)width / (float)WaveWidth) * (float)WaveHeight;
+            float endCurvePoint = CurrentCurve.Evaluate((float)(width + 1) / (float)WaveWidth) * (float)WaveHeight;
 
             DrawLine(waveTexture, width, (int)(startCurvePoint), width + 1, (int)(endCurvePoint), LineColor);
         }
