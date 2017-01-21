@@ -35,7 +35,6 @@ public class SpawnerManager : MonoBehaviour {
 
                 }
             }
-            Debug.Log(objs);
         }
 	}
 }

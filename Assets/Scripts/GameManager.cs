@@ -161,8 +161,8 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
                 break;
             case StateMethod.Update:
                 {
-                fsm.ChangeState((int)States.Active);
-                break;
+                    fsm.ChangeState((int)States.Active);
+                    break;
                 }
             case StateMethod.Exit:
                 Spawner.enabled = false;

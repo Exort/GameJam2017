@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 212321657872050980}
   - component: {fileID: 50826100100732196}
   - component: {fileID: 61226579107713402}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wave
   m_TagString: Untagged
   m_Icon: {fileID: 4660412927644837186, guid: 0000000000000000d000000000000000, type: 0}

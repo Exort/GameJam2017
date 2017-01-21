@@ -10,13 +10,10 @@ public class PlayerCharacter : MonoBehaviour
     };
 
     public float LaneChangeSpeed = 5f;
-
-    private float startY;
-    private Wave currentWave;
+    public PlayerWaveDetector WaveDetectorPrefab;
 
     private Rigidbody2D playerBody;
-    private BoxCollider2D playerCollider;
-    private SpriteRenderer spriteRender;
+    private PlayerWaveDetector waveDetector;
 
     private float _targetY;
     private float _animationTime;
@@ -25,69 +22,22 @@ public class PlayerCharacter : MonoBehaviour
 
     public void ResetWave()
     {
-        currentWave = null;
+        waveDetector.ResetWave();
     }
 
     void Start ()
     {
-        currentWave = null;
         playerBody = GetComponent<Rigidbody2D>();
-        playerCollider = GetComponent<BoxCollider2D>();
 
-        spriteRender = GetComponentInChildren<SpriteRenderer>();
-    }
-
-    void UpdateWaveMovement ()
-    {
-        if (currentWave != null)
-        {
-            float waveSign = Mathf.Sign(currentWave.MoveSpeed);
-
-            float waveX = currentWave.transform.position.x;
-            float diff = transform.position.x - waveX;
-
-            float step = diff / currentWave.ScreenWaveWidth;
-
-            Debug.Log(string.Format("Step={0}, WaveX={1}, PlayerX={2}, {3}", step, waveX, transform.position.x, diff));
-
-            if (diff >= 0f)
-            {
-                float deltaY = currentWave.WaveCurve.Evaluate(step) * currentWave.ScreenWaveHeight;
-
-                playerBody.position = new Vector2(playerBody.position.x, startY + deltaY);
-            }
-            else if ((waveSign < 0 && step > 1f)
-                     || (waveSign > 0 && step < 0f))
-            {
-                Debug.Log("Leaving wave");
-                playerBody.position = new Vector2(playerBody.position.x, startY);
-                currentWave = null;
-                playerCollider.enabled = true;
-            }
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        var wave = collision.gameObject.GetComponent<Wave>();
-        if (wave != null)
-        {
-            if ((currentWave != null && currentWave != wave) || currentWave == null)
-            {
-                playerCollider.enabled = false;
-                currentWave = wave;
-
-                startY = playerBody.position.y;
-
-                Debug.Log("Entering wave");
-            }
-        }
+        waveDetector = Instantiate(WaveDetectorPrefab, transform.position, Quaternion.identity);
+        waveDetector.PlayerBody = playerBody;
     }
 
     void Awake()
     {
         fsm.AddState (StateStanding);
         fsm.AddState (StateChangingLane);
+
         fsm.ChangeState ((int)States.Standing);
     }
 
@@ -99,6 +49,8 @@ public class PlayerCharacter : MonoBehaviour
     void FixedUpdate()
     {
         fsm.FixedUpdate(Time.deltaTime);
+
+        waveDetector.PositionX = playerBody.position.x;
     }
 
     public bool CanChangeLane
@@ -116,15 +68,9 @@ public class PlayerCharacter : MonoBehaviour
         _targetY = targetY;
         fsm.ChangeState ((int)States.ChangingLane);
     }
-        
+
     void StateStanding(StateMethod method, float deltaTime)
     {
-        switch(method)
-        {
-        case StateMethod.FixedUpdate:
-            UpdateWaveMovement ();
-            break;
-        }
     }
 
     void StateChangingLane(StateMethod method, float deltaTime)
@@ -133,11 +79,13 @@ public class PlayerCharacter : MonoBehaviour
         {
         case StateMethod.Enter:
             _animationTime = 0;
+            waveDetector.enabled = false;
             break;
         case StateMethod.Update:
             LerpToTargetY (deltaTime, LaneChangeSpeed);
             break;
         case StateMethod.Exit:
+            waveDetector.enabled = true;
             break;
         }
     }
@@ -155,9 +103,13 @@ public class PlayerCharacter : MonoBehaviour
         else
         {
             playerBody.position = targetPosition;
+            waveDetector.Position = targetPosition;
         }
+
         if(Mathf.Abs(playerBody.position.y - targetPosition.y) < Mathf.Epsilon)
         {
+            waveDetector.Position = targetPosition;
+
             fsm.ChangeState ((int)States.Standing);
         }
     }
