@@ -14,13 +14,17 @@ public class ScoreEntry : MonoBehaviour
     public event Action<string,string> NameEntered = delegate{};
 
     int _nameEnterIndex = -1;
-    float _previousVerticalAxis;
+    float previousVerticalAxis;
+    float previousTouchAxis;
+
+    VerticalSwipeHelper _verticalSwipeHelper;
 
     public void PromptName()
     {
+        _verticalSwipeHelper = new VerticalSwipeHelper ();
         PlayerName.text = "A  ";
         _nameEnterIndex = 0;
-        _previousVerticalAxis = 0;
+        previousVerticalAxis = 0;
     }
     private bool upPreviouslyKeyDown = false;
     private bool downPreviouslyKeyDown = false;
@@ -30,16 +34,17 @@ public class ScoreEntry : MonoBehaviour
         {
            
             float verticalAxis = Input.GetAxis("Vertical");
+            var touchAxis = _verticalSwipeHelper.UpdateAxisValue ();
 
-            if (verticalAxis > _previousVerticalAxis)
+            if(verticalAxis > previousVerticalAxis || touchAxis > previousTouchAxis)
             {
-                if (_previousVerticalAxis < 0)
+                if(previousVerticalAxis < 0 || previousTouchAxis < 0)
                 {
                     downPreviouslyKeyDown = false;
                 }
                 else
                 {
-                    if (!upPreviouslyKeyDown)
+                    if(!upPreviouslyKeyDown)
                     {
                         upPreviouslyKeyDown = true;
                         PlayerName.text = ReplaceCharAtIndex(PlayerName.text, CycleChar(PlayerName.text[_nameEnterIndex], 1), _nameEnterIndex);
@@ -48,15 +53,15 @@ public class ScoreEntry : MonoBehaviour
             }
             else
             {
-                if (verticalAxis < _previousVerticalAxis)
+                if(verticalAxis < previousVerticalAxis || touchAxis < previousTouchAxis)
                 {
-                    if (_previousVerticalAxis > 0)
+                    if(previousVerticalAxis > 0 || previousTouchAxis > 0)
                     {
                         upPreviouslyKeyDown = false;
                     }
                     else
                     {
-                        if (!downPreviouslyKeyDown)
+                        if(!downPreviouslyKeyDown)
                         {
                             downPreviouslyKeyDown = true;
                             PlayerName.text = ReplaceCharAtIndex(PlayerName.text, CycleChar(PlayerName.text[_nameEnterIndex], -1), _nameEnterIndex);
@@ -65,9 +70,12 @@ public class ScoreEntry : MonoBehaviour
                 }
             }
 
-            _previousVerticalAxis = verticalAxis;
+            previousVerticalAxis = verticalAxis;
+            previousTouchAxis = touchAxis;
 
-           if(Input.GetButtonDown("Jump"))
+
+
+            if(Input.anyKeyDown && !upPreviouslyKeyDown && !downPreviouslyKeyDown)
             {
                 _nameEnterIndex++;
 
@@ -80,7 +88,7 @@ public class ScoreEntry : MonoBehaviour
                 PlayerName.text = ReplaceCharAtIndex(PlayerName.text, 'A', _nameEnterIndex);
             }
 
-            _previousVerticalAxis = verticalAxis;
+            previousVerticalAxis = verticalAxis;
         }
     }
 
@@ -98,6 +106,7 @@ public class ScoreEntry : MonoBehaviour
 
     public void SubmitName()
     {
+        _verticalSwipeHelper = null;
         _nameEnterIndex = -1;
         NameEntered (PlayerName.text, Score.text);
     }
