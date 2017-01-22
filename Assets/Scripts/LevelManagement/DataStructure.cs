@@ -51,7 +51,7 @@ public class Level
         NegativeObjectType.Add(new WeightedType(typeof(NegativeWave), r.Next(1,10)));
         //NegativeObjectType.Add(new WeightedType(typeof(FireWall), r.Next(1,2)*LevelNumber));
         NegativeObjectType.Add(new WeightedType(typeof(WindowsLogo), r.Next(1, 2) * LevelNumber));
-        NegativeObjectType.Add(new WeightedType(typeof(Packet), r.Next(1, 2)));
+        NegativeObjectType.Add(new WeightedType(typeof(Packet), r.Next(1, 2) * LevelNumber));
 
         PositiveObjectType.Clear();
         PositiveObjectType.Add(new WeightedType(typeof(PositiveWave), r.Next(1,10)));

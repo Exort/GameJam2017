@@ -17,6 +17,7 @@ public class PlayerCharacter : MonoBehaviour
     public AudioClip GoodWaveSound;
     public AudioClip BadWaveSound;
     public AudioClip DeathSound;
+    public AudioClip PickupSound;
 
     private enum States
     {
@@ -216,6 +217,8 @@ public class PlayerCharacter : MonoBehaviour
         var packet = collision.gameObject.GetComponent<PickupPacket>();
         if (packet != null)
         {
+            audioSource.PlayOneShot(PickupSound);
+
             var handler = PickPacket;
             if (handler != null)
             {
