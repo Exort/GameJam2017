@@ -50,7 +50,8 @@ public class Level
 
         NegativeObjectType.Clear();
         NegativeObjectType.Add(new WeightedType(typeof(NegativeWave), r.Next(1,10)));
-        NegativeObjectType.Add(new WeightedType(typeof(FireWall), r.Next(1,2)*LevelNumber));
+        //NegativeObjectType.Add(new WeightedType(typeof(FireWall), r.Next(1,2)*LevelNumber));
+        NegativeObjectType.Add(new WeightedType(typeof(WindowsLogo), r.Next(1, 2) * LevelNumber));
 
         PositiveObjectType.Clear();
         PositiveObjectType.Add(new WeightedType(typeof(PositiveWave), r.Next(1,10)));
@@ -201,8 +202,8 @@ public class Level
         Delay += delaySinceLastCall;
         return ret;
     }
-    
 }
+
 public class WeightedType
 {
     public WeightedType(System.Type t, int w)
@@ -213,22 +214,23 @@ public class WeightedType
     public System.Type theType;
     public int Weight;
 }
+
 public abstract class ObjectInstance
 {
     public const int NbLanes = 5;
     public int PointValue = 0;
     public int LaneIndex = 0;
     public int Speed = 0;
-    public bool Kill = false;
     public int SpeedEffect = 0;
     public float Timestamp = 0;
+
     public ObjectInstance()
     {
         SelectRandomLane();
     }
+
     private void SelectRandomLane()
     {
-      
         LaneIndex = Level.r.Next(0, NbLanes );
     }
 }
@@ -251,7 +253,10 @@ public class FireWall:ObjectInstance
 {
     public FireWall():base()
     {
-        Kill = true;
         PointValue = 1;
     }
+}
+
+public class WindowsLogo : ObjectInstance
+{
 }

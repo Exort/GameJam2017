@@ -35,6 +35,11 @@ namespace Assets.Scripts
 
         public void ChangeState(int state)
         {
+            if (currentState == state)
+            {
+                return;
+            }
+
             if (currentState != -1)
             {
                 states[currentState].Invoke(StateMethod.Exit, 0f);

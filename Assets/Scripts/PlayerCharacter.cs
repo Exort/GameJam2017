@@ -16,18 +16,19 @@ public class PlayerCharacter : MonoBehaviour
     public PlayerWaveDetector WaveDetectorPrefab;
     public AudioClip GoodWaveSound;
     public AudioClip BadWaveSound;
+    public AudioClip DeathSound;
 
     private enum States
     {
         Standing,
-        ChangingLane
+        ChangingLane,
+        Dead
     };
-
-    private bool Dead = false;
 
     private Rigidbody2D playerBody;
     private AudioSource audioSource;
     private PlayerWaveDetector waveDetector;
+    private SpriteRenderer spriteRenderer;
 
     private float _targetY;
     private float _animationTime;
@@ -53,6 +54,7 @@ public class PlayerCharacter : MonoBehaviour
 
         playerBody = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         waveDetector = Instantiate(WaveDetectorPrefab, transform.position, Quaternion.identity);
         waveDetector.PlayerBody = playerBody;
@@ -61,8 +63,9 @@ public class PlayerCharacter : MonoBehaviour
 
     void Awake()
     {
-        fsm.AddState (StateStanding);
-        fsm.AddState (StateChangingLane);
+        fsm.AddState(StateStanding);
+        fsm.AddState(StateChangingLane);
+        fsm.AddState(StateDead);
 
         fsm.ChangeState ((int)States.Standing);
     }
@@ -120,12 +123,7 @@ public class PlayerCharacter : MonoBehaviour
                 {
                     if (playerBody.position.x < KillPosition)
                     {
-                        //GAMEOVER
-                        if (!Dead)
-                        {
-                            Dead = true;
-                            EventManager.Instance.SendEvent(EventType.GameOver, null);
-                        }
+                        fsm.ChangeState((int)States.Dead);
                     }
                     break;
                 }
@@ -157,15 +155,31 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
+    void StateDead(StateMethod method, float deltaTime)
+    {
+        if (method == StateMethod.Enter)
+        {
+            spriteRenderer.enabled = false;
+            waveDetector.IsShadowVisible = false;
+            waveDetector.enabled = false;
+
+            audioSource.PlayOneShot(DeathSound);
+
+            CurrentSpeed = 0f;
+
+            EventManager.Instance.SendEvent(EventType.GameOver, null);
+        }
+    }
+
     void LerpToTargetY(float deltaTime, float speed)
     {
         Vector3 targetPosition = playerBody.position;
         targetPosition.y = _targetY;
 
-        if(speed > 0)
+        if (speed > 0)
         {
             _animationTime += deltaTime;
-            playerBody.position = Vector3.Lerp (playerBody.position, targetPosition, _animationTime * speed);
+            playerBody.position = Vector3.Lerp(playerBody.position, targetPosition, _animationTime * speed);
         }
         else
         {
@@ -173,12 +187,21 @@ public class PlayerCharacter : MonoBehaviour
             waveDetector.Position = targetPosition;
         }
 
-        if(Mathf.Abs(playerBody.position.y - targetPosition.y) < Mathf.Epsilon)
+        if (Mathf.Abs(playerBody.position.y - targetPosition.y) < Mathf.Epsilon)
         {
             playerBody.position = targetPosition;
             waveDetector.Position = targetPosition;
 
-            fsm.ChangeState ((int)States.Standing);
+            fsm.ChangeState((int)States.Standing);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        var lethalEnemy = collision.gameObject.GetComponent<LethalEnemy>();
+        if (lethalEnemy != null)
+        {
+            fsm.ChangeState((int)States.Dead);
         }
     }
 
@@ -190,8 +213,7 @@ public class PlayerCharacter : MonoBehaviour
             bool DoApply = true;
             if (Mathf.Sign(wave.MoveSpeed) > 0f)
             {
-                
-                if(!wave.HasBeenEntered)
+                if (!wave.HasBeenEntered)
                 {
                     wave.HasBeenEntered = true;
                 }
@@ -199,24 +221,21 @@ public class PlayerCharacter : MonoBehaviour
                 {
                     DoApply = false;
                 }
-               
             }
-           
+
             if (DoApply)
             {
                 if (Mathf.Sign(wave.MoveSpeed) > 0f)
                 {
                     audioSource.PlayOneShot(GoodWaveSound);
-
                 }
                 else
                 {
                     audioSource.PlayOneShot(BadWaveSound);
-
                 }
                 CurrentSpeed += wave.MoveSpeed * 5;
             }
-            
+
             handler.Invoke(wave);
         }
     }
