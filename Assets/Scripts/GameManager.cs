@@ -105,6 +105,7 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
         {
             Destroy(PlayerCharacter.gameObject);
             PlayerCharacter.EnteredWave -= OnPlayerCharacterEnteredWave;
+            PlayerCharacter.PickPacket -= OnPlayerPickupPacket;
             PlayerCharacter = null;
         }
 
@@ -159,6 +160,12 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
             PlayerCharacter.ResetWave();
             CurrentLane = laneIndex;
         }
+    }
+
+    private void OnPlayerPickupPacket(PickupPacket packet)
+    {
+        Score += packet.PointsToGive;
+        Destroy(packet.gameObject);
     }
 
     private void OnPlayerCharacterEnteredWave(Wave wave)
@@ -224,6 +231,7 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
                     PlayerName = "MTL";
                     PlayerCharacter = Instantiate(PlayerPrefab, new Vector3(PlayerOffset, 0f), Quaternion.identity);
                     PlayerCharacter.EnteredWave += OnPlayerCharacterEnteredWave;
+                    PlayerCharacter.PickPacket += OnPlayerPickupPacket;
 
                     ChangeLane(2);
                     break;

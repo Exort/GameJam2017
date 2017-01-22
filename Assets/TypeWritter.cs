@@ -36,7 +36,6 @@ public class TypeWritter : MonoBehaviour
             if (writerTimer >= WriteDelay)
             {
                 if (!char.IsWhiteSpace(story[typeIndex]))
-                //if (!audioSource.isPlaying)
                 {
                     audioSource.Play();
                 }

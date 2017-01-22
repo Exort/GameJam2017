@@ -8,6 +8,8 @@ public class SpawnerManager : MonoBehaviour {
     public List<Wave> PositiveWaveTemplates;
     public List<Wave> NegativeWaveTemplates;
     public List<LethalEnemy> WindowsLogoTemplates;
+    public List<PickupPacket> PacketTemplates;
+
     Level currentLevel;
 	// Use this for initialization
     public int GetTargetScore()
@@ -42,9 +44,8 @@ public class SpawnerManager : MonoBehaviour {
                     int index = r.Next(0, PositiveWaveTemplates.Count);
                     Wave obj = Instantiate(PositiveWaveTemplates[index], GameManager.Lanes[inst.LaneIndex].transform,false);
                     obj.ApplySource(inst);
-                    
-
                 }
+
                 if (inst is NegativeWave)
                 {
                     int index = r.Next(0, NegativeWaveTemplates.Count);
@@ -55,6 +56,7 @@ public class SpawnerManager : MonoBehaviour {
                     obj.transform.position = t;
                     obj.ApplySource(inst);
                 }
+
                 if (inst is FireWall)
                 {
                     int index = r.Next(0, NegativeWaveTemplates.Count);
@@ -71,8 +73,14 @@ public class SpawnerManager : MonoBehaviour {
                     int index = r.Next(0, WindowsLogoTemplates.Count);
                     LethalEnemy obj = Instantiate(WindowsLogoTemplates[index], GameManager.Lanes[inst.LaneIndex].transform, false);
                 }
+
+                if (inst is Packet)
+                {
+                    int index = r.Next(0, PacketTemplates.Count);
+                    PickupPacket obj = Instantiate(PacketTemplates[index], GameManager.Lanes[inst.LaneIndex].transform, false);
+                    obj.MoveSpeed *= inst.Speed;
+                }
             }
-           
         }
 	}
 }

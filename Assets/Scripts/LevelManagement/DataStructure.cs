@@ -44,18 +44,17 @@ public class Level
     }
     private void ShuffleObjectType()
     {
-       
         PositiveWaveType.Clear();
-        PositiveWaveType.Add(new WeightedType(typeof(PositiveWave),1));
+        PositiveWaveType.Add(new WeightedType(typeof(PositiveWave), 1));
 
         NegativeObjectType.Clear();
         NegativeObjectType.Add(new WeightedType(typeof(NegativeWave), r.Next(1,10)));
         //NegativeObjectType.Add(new WeightedType(typeof(FireWall), r.Next(1,2)*LevelNumber));
         NegativeObjectType.Add(new WeightedType(typeof(WindowsLogo), r.Next(1, 2) * LevelNumber));
+        NegativeObjectType.Add(new WeightedType(typeof(Packet), r.Next(1, 2)));
 
         PositiveObjectType.Clear();
         PositiveObjectType.Add(new WeightedType(typeof(PositiveWave), r.Next(1,10)));
-
     }
     private static System.Type GetTypeToSpawn(List<WeightedType> typeList)
     {
@@ -271,3 +270,6 @@ public class FireWall:ObjectInstance
 public class WindowsLogo : ObjectInstance
 {
 }
+
+public class Packet : ObjectInstance
+{ }

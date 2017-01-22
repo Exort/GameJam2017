@@ -36,6 +36,7 @@ public class PlayerCharacter : MonoBehaviour
     private FSM fsm = new FSM();
 
     public Action<Wave> EnteredWave;
+    public Action<PickupPacket> PickPacket;
 
     public void ResetWave()
     {
@@ -210,6 +211,16 @@ public class PlayerCharacter : MonoBehaviour
         if (lethalEnemy != null)
         {
             fsm.ChangeState((int)States.Dead);
+        }
+
+        var packet = collision.gameObject.GetComponent<PickupPacket>();
+        if (packet != null)
+        {
+            var handler = PickPacket;
+            if (handler != null)
+            {
+                handler.Invoke(packet);
+            }
         }
     }
 

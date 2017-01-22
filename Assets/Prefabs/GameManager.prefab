@@ -322,6 +322,8 @@ MonoBehaviour:
   - {fileID: 114998037542111874, guid: bdde24b3e3e157741a2277cfa029076f, type: 2}
   WindowsLogoTemplates:
   - {fileID: 114746031466211802, guid: 5bab4c0c0cdedd04ab68cffdfb173252, type: 2}
+  PacketTemplates:
+  - {fileID: 114494436051053378, guid: 9bde25a72300bc543bc01f34f3275d60, type: 2}
 --- !u!114 &114692312790337460
 MonoBehaviour:
   m_ObjectHideFlags: 1
