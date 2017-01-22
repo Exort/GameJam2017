@@ -145,9 +145,6 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
 
     private void GameOver()
     {
-        //Remove
-        Score = 5;
-
         GameOverView gv = Instantiate(GameOverScreenPrefab);
         gv.Fillout(Score);
     }
