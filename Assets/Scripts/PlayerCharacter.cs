@@ -48,8 +48,6 @@ public class PlayerCharacter : MonoBehaviour
         BaseSpeed = 0;
         KillPosition = -10;
 
-    
-
         playerBody = GetComponent<Rigidbody2D>();
 
         waveDetector = Instantiate(WaveDetectorPrefab, transform.position, Quaternion.identity);
@@ -67,40 +65,6 @@ public class PlayerCharacter : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            if (CurrentSpeed < MaxSpeed)
-            {
-                CurrentSpeed += (BoostVelocity);
-                if (CurrentSpeed > MaxSpeed)
-                {
-                    CurrentSpeed = MaxSpeed;
-                }
-            }
-        }
-        CurrentSpeed -= WaterVelocity;
-        if (CurrentSpeed < LowestSpeed)
-        {
-            CurrentSpeed = LowestSpeed;
-        }
-
-        if (playerBody.position.x >= MaxPosition && CurrentSpeed > 0)
-        {
-            CurrentSpeed = 0;
-        }
-
-        playerBody.position = new Vector2(playerBody.position.x + CurrentSpeed * Time.deltaTime, playerBody.position.y);
-
-        if (playerBody.position.x < KillPosition)
-        {
-            //GAMEOVER
-            if (!Dead)
-            {
-                Dead = true;
-                EventManager.Instance.SendEvent(EventType.GameOver, null);
-            }
-        }
-
         fsm.Update(Time.deltaTime);
     }
 
@@ -132,6 +96,36 @@ public class PlayerCharacter : MonoBehaviour
 
     void StateStanding(StateMethod method, float deltaTime)
     {
+        switch (method)
+        {
+            case StateMethod.Update:
+                {
+                    CurrentSpeed -= WaterVelocity;
+
+                    CurrentSpeed = Mathf.Clamp(CurrentSpeed, LowestSpeed, MaxSpeed);
+
+                    if (playerBody.position.x >= MaxPosition && CurrentSpeed > 0)
+                    {
+                        CurrentSpeed = 0;
+                    }
+
+                    playerBody.position = new Vector2(playerBody.position.x + CurrentSpeed * Time.deltaTime, playerBody.position.y);
+                    break;
+                }
+            case StateMethod.FixedUpdate:
+                {
+                    if (playerBody.position.x < KillPosition)
+                    {
+                        //GAMEOVER
+                        if (!Dead)
+                        {
+                            Dead = true;
+                            EventManager.Instance.SendEvent(EventType.GameOver, null);
+                        }
+                    }
+                    break;
+                }
+        }
     }
 
     void StateChangingLane(StateMethod method, float deltaTime)
@@ -143,6 +137,7 @@ public class PlayerCharacter : MonoBehaviour
             if (waveDetector != null)
             {
                 waveDetector.enabled = false;
+                waveDetector.IsShadowVisible = false;
             }
             break;
         case StateMethod.Update:
@@ -152,6 +147,7 @@ public class PlayerCharacter : MonoBehaviour
             if (waveDetector != null)
             {
                 waveDetector.enabled = true;
+                waveDetector.IsShadowVisible = true;
             }
             break;
         }
@@ -175,6 +171,7 @@ public class PlayerCharacter : MonoBehaviour
 
         if(Mathf.Abs(playerBody.position.y - targetPosition.y) < Mathf.Epsilon)
         {
+            playerBody.position = targetPosition;
             waveDetector.Position = targetPosition;
 
             fsm.ChangeState ((int)States.Standing);
@@ -186,6 +183,15 @@ public class PlayerCharacter : MonoBehaviour
         var handler = EnteredWave;
         if (handler != null)
         {
+            if (Mathf.Sign(wave.MoveSpeed) > 0f)
+            {
+                CurrentSpeed += BoostVelocity;
+            }
+            else
+            {
+                CurrentSpeed = 0f;
+            }
+
             handler.Invoke(wave);
         }
     }

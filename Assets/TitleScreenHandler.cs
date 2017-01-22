@@ -27,14 +27,17 @@ public class TitleScreenHandler : MonoBehaviour {
         }
 
         blinkTimer += Time.deltaTime;
-        
-        Color c = GlowImage.color;
-        c.a = blinkTimer / BlinkTime ;
-        if(AnyKeyComponent.enabled)
+
+        if (GlowImage != null)
         {
-            c.a = 1 - c.a;
+            Color c = GlowImage.color;
+            c.a = blinkTimer / BlinkTime;
+            if (AnyKeyComponent.enabled)
+            {
+                c.a = 1 - c.a;
+            }
+            GlowImage.color = c;
         }
-        GlowImage.color = c;
        
         if (blinkTimer >= BlinkTime)
         {

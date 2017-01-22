@@ -8,6 +8,7 @@ public class PlayerWaveDetector : MonoBehaviour
     private Wave currentWave;
 
     private Rigidbody2D myRigidBody;
+    private SpriteRenderer spriteRenderer;
 
     private Rigidbody2D playerBody;
     public Rigidbody2D PlayerBody
@@ -23,6 +24,7 @@ public class PlayerWaveDetector : MonoBehaviour
         set
         {
             myRigidBody.position = value;
+            transform.position = value;
         }
     }
 
@@ -42,12 +44,38 @@ public class PlayerWaveDetector : MonoBehaviour
         }
     }
 
+    public float WaveSign
+    {
+        get
+        {
+            if (currentWave != null)
+            {
+                return Mathf.Sign(currentWave.MoveSpeed);
+            }
+
+            return 0f;
+        }
+    }
+
+    public bool IsShadowVisible
+    {
+        get
+        {
+            return spriteRenderer.enabled;
+        }
+        set
+        {
+            spriteRenderer.enabled = value;
+        }
+    }
+
     public Action<Wave> EnteredWave;
 
     void Start ()
     {
         currentWave = null;
         myRigidBody = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void ResetWave()
@@ -73,8 +101,6 @@ public class PlayerWaveDetector : MonoBehaviour
              //   Debug.Log("Leaving wave");
 
                 playerBody.position = new Vector2(playerBody.position.x, transform.position.y);
-
-                currentWave = null;
             }
         }
     }
@@ -98,13 +124,8 @@ public class PlayerWaveDetector : MonoBehaviour
     void OnTriggerStay2D(Collider2D collision)
     {
         var wave = collision.gameObject.GetComponent<Wave>();
-        if (wave != null)
+        if (wave != null && wave != currentWave)
         {
-            if (wave == currentWave)
-            {
-                return;
-            }
-
             if (currentWave != null)
             {
                 float step = 0f;
