@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61073005834326652}
   - component: {fileID: 212463768191352936}
   - component: {fileID: 82725194253792398}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PlayerCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1881527160204524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.25, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -182,6 +182,7 @@ MonoBehaviour:
     type: 2}
   GoodWaveSound: {fileID: 8300000, guid: 3c697611ed6363b46a519940dc6515f5, type: 3}
   BadWaveSound: {fileID: 8300000, guid: 5246b379392d65140b2189745b8e1306, type: 3}
+  DeathSound: {fileID: 8300000, guid: 2bc61dff024434e48802e7f9933f12c4, type: 3}
 --- !u!212 &212463768191352936
 SpriteRenderer:
   m_ObjectHideFlags: 1

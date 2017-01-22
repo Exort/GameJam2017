@@ -7,6 +7,7 @@ public class SpawnerManager : MonoBehaviour {
     public GameManager GameManager;
     public List<Wave> PositiveWaveTemplates;
     public List<Wave> NegativeWaveTemplates;
+    public List<LethalEnemy> WindowsLogoTemplates;
     Level currentLevel;
 	// Use this for initialization
     public int GetTargetScore()
@@ -63,6 +64,12 @@ public class SpawnerManager : MonoBehaviour {
                     t.x *= -1;
                     obj.transform.position = t;
                     obj.ApplySource(inst);
+                }
+
+                if (inst is WindowsLogo)
+                {
+                    int index = r.Next(0, WindowsLogoTemplates.Count);
+                    LethalEnemy obj = Instantiate(WindowsLogoTemplates[index], GameManager.Lanes[inst.LaneIndex].transform, false);
                 }
             }
            

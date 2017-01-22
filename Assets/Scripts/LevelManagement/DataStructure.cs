@@ -50,7 +50,8 @@ public class Level
 
         NegativeObjectType.Clear();
         NegativeObjectType.Add(new WeightedType(typeof(NegativeWave), r.Next(1,10)));
-        NegativeObjectType.Add(new WeightedType(typeof(FireWall), r.Next(1,2)*LevelNumber));
+        //NegativeObjectType.Add(new WeightedType(typeof(FireWall), r.Next(1,2)*LevelNumber));
+        NegativeObjectType.Add(new WeightedType(typeof(WindowsLogo), r.Next(1, 2) * LevelNumber));
 
         PositiveObjectType.Clear();
         PositiveObjectType.Add(new WeightedType(typeof(PositiveWave), r.Next(1,10)));
@@ -265,4 +266,8 @@ public class FireWall:ObjectInstance
         Kill = true;
         PointValue = 1;
     }
+}
+
+public class WindowsLogo : ObjectInstance
+{
 }
