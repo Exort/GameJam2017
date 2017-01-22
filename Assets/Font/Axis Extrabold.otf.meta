@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 15d621dcb07de40469ce41f314500e57
+timeCreated: 1485051661
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: AXIS
+  fontNames:
+  - AXIS
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
