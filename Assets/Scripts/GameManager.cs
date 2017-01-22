@@ -19,6 +19,8 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
     public string PlayerName;
 
     private int _level = 0;
+    private float previousVerticalAxis = 0f;
+
     public int Level
     {
         get 
@@ -121,9 +123,6 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
     void Update()
     {
         fsm.Update(Time.deltaTime);
-
-        //todo use input manager
-        
     }
 
     void FixedUpdate()
@@ -210,15 +209,21 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
                 }
             case StateMethod.Update:
                 {
-                    if (Input.GetKeyDown(KeyCode.UpArrow))
+                    float verticalAxis = Input.GetAxis("Vertical");
+
+                    // Up
+                    if (Mathf.Approximately(previousVerticalAxis, 0f) && verticalAxis > 0)
                     {
                         ChangeLane(Mathf.Max(0, CurrentLane - 1));
                     }
 
-                    if (Input.GetKeyDown(KeyCode.DownArrow))
+                    // Down
+                    if (Mathf.Approximately(previousVerticalAxis, 0f) &&  verticalAxis < 0)
                     {
                         ChangeLane(Mathf.Min(Lanes.Count - 1, CurrentLane + 1));
                     }
+
+                    previousVerticalAxis = verticalAxis;
                     break;
                 }
             case StateMethod.Exit:

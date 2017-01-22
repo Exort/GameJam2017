@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Wave
+    uniqueID: 3763175149
+    locked: 0
   - name: Sprites
     uniqueID: 311739337
     locked: 0
