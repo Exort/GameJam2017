@@ -10,6 +10,14 @@ public class GameOverView : MonoBehaviour {
 
     private bool _done;
 
+    public bool IsDone
+    {
+        get
+        {
+            return _done;
+        }
+    }
+
     private void SendHighScore(long score)
     {
     }

@@ -311,7 +311,7 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
                 }
             case StateMethod.Update:
                 {
-                    if (Input.anyKeyDown)
+                    if (gameOverView != null && gameOverView.IsDone)
                     {
                         DestroyImmediate(gameOverView.gameObject);
                         gameOverView = null;
