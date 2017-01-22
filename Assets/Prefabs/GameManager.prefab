@@ -352,7 +352,7 @@ MonoBehaviour:
   PlayerPrefab: {fileID: 114996582513655874, guid: fa029b386913bd146a591715a176f0ff,
     type: 2}
   StartScrollSpeed: 0.25
-  PlayerOffset: -2.25
+  PlayerOffset: 2.07
   ScrollIncrement: 0.05
   PlayerName: 
 --- !u!114 &114880032547268926
