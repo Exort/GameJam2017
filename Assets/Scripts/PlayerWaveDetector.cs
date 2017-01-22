@@ -70,6 +70,7 @@ public class PlayerWaveDetector : MonoBehaviour
     }
 
     public Action<Wave> EnteredWave;
+    public Action<GameObject> EnteredObject;
 
     void Start ()
     {
@@ -119,6 +120,19 @@ public class PlayerWaveDetector : MonoBehaviour
         }
 
         return deltaY;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        var wave = collision.gameObject.GetComponent<Wave>();
+        if (wave == null)
+        {
+            var handler = EnteredObject;
+            if (handler != null)
+            {
+                handler.Invoke(collision.gameObject);
+            }
+        }
     }
 
     void OnTriggerStay2D(Collider2D collision)

@@ -61,6 +61,7 @@ public class PlayerCharacter : MonoBehaviour
         waveDetector = Instantiate(WaveDetectorPrefab, transform.position, Quaternion.identity);
         waveDetector.PlayerBody = playerBody;
         waveDetector.EnteredWave += onEnteredWave;
+        waveDetector.EnteredObject += onObjectEnter;
     }
 
     void OnDestroy()
@@ -206,15 +207,15 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void onObjectEnter(GameObject obj)
     {
-        var lethalEnemy = collision.gameObject.GetComponent<LethalEnemy>();
+        var lethalEnemy = obj.GetComponent<LethalEnemy>();
         if (lethalEnemy != null)
         {
             fsm.ChangeState((int)States.Dead);
         }
 
-        var packet = collision.gameObject.GetComponent<PickupPacket>();
+        var packet = obj.GetComponent<PickupPacket>();
         if (packet != null)
         {
             audioSource.PlayOneShot(PickupSound);

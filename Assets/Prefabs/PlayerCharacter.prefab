@@ -201,6 +201,7 @@ MonoBehaviour:
   GoodWaveSound: {fileID: 8300000, guid: 3c697611ed6363b46a519940dc6515f5, type: 3}
   BadWaveSound: {fileID: 8300000, guid: 5246b379392d65140b2189745b8e1306, type: 3}
   DeathSound: {fileID: 8300000, guid: 2bc61dff024434e48802e7f9933f12c4, type: 3}
+  PickupSound: {fileID: 8300000, guid: 4bb2c1fe22268c54b981595f939f86bc, type: 3}
 --- !u!212 &212463768191352936
 SpriteRenderer:
   m_ObjectHideFlags: 1
