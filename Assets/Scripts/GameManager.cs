@@ -1,12 +1,13 @@
 ﻿using Assets.Scripts;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : BaseSingleton<GameManager> , EventListener
+public class GameManager : BaseSingleton<GameManager>, EventListener
 {
+    public ScrollHorizontal UpperPlayfield;
     public ScrollHorizontal ScrollingBackground;
     public GameOverView GameOverScreenPrefab;
+    public TitleScreenHandler TitleScreenPrefab;
     public GameUI GameUI;
     public SpawnerManager Spawner;
     public List<GameObject> Lanes;
@@ -20,14 +21,16 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
 
     private int _level = 0;
     private float previousVerticalAxis = 0f;
+    private GameOverView gameOverView;
+    private TitleScreenHandler titleScreen;
 
     public int Level
     {
-        get 
+        get
         {
             return _level;
         }
-        set 
+        set
         {
             _level = value;
             GameUI.LevelText.text = "Level " + _level.ToString();
@@ -37,14 +40,14 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
     private long _score = 0;
     public long Score
     {
-        get 
+        get
         {
             return _score;
         }
-        set 
+        set
         {
             _score = value;
-            if(_score >= Spawner.GetTargetScore())
+            if (_score >= Spawner.GetTargetScore())
             {
                 Spawner.NextLevel();
             }
@@ -55,11 +58,11 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
     private int _multiplier = 0;
     public int Multiplier
     {
-        get 
+        get
         {
             return _multiplier;
         }
-        set 
+        set
         {
             _multiplier = value;
             GameUI.MultiplierText.text = "X" + _multiplier.ToString();
@@ -76,43 +79,48 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
     private enum States
     {
         Title,
-        Start,
         Active,
-        ChangingLanes,
         GameOver
     };
 
     void Awake()
     {
         fsm.AddState(StateTitle);
-        fsm.AddState(StateStart);
         fsm.AddState(StateActive);
-        fsm.AddState(StateChangeLane);
         fsm.AddState(StateGameOver);
+
+        EventManager.Instance.Register(this);
     }
 
     void Start()
     {
         fsm.ChangeState((int)States.Title);
+
         HighScoreTool.Instance.StartThread();
-        EventManager.Instance.Register(this);
     }
 
     void Reset()
     {
         if (PlayerCharacter != null)
         {
-            DestroyImmediate(PlayerCharacter.gameObject);
+            Destroy(PlayerCharacter.gameObject);
             PlayerCharacter.EnteredWave -= OnPlayerCharacterEnteredWave;
             PlayerCharacter = null;
         }
 
         _level = 0;
         _multiplier = 0;
+
         if (ScrollingBackground != null)
         {
             ScrollingBackground.ScrollSpeed = StartScrollSpeed;
         }
+
+        if (UpperPlayfield != null)
+        {
+            UpperPlayfield.enabled = true;
+        }
+
         _score = 0;
 
         GameUI.Reset();
@@ -127,76 +135,88 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
 
     void FixedUpdate()
     {
-        fsm.FixedUpdate (Time.deltaTime);
+        fsm.FixedUpdate(Time.deltaTime);
     }
 
-    public void OnMessage(EventType tp, object param)
+    public void OnMessage(EventType eventType, object param)
     {
-        if (tp == EventType.StartGame)
+        switch(eventType)
         {
-            fsm.ChangeState((int)States.Start);
+            case EventType.StartGame:
+                fsm.ChangeState((int)States.Active);
+                break;
+            case EventType.GameOver:
+                fsm.ChangeState((int)States.GameOver);
+                break;
         }
-        if(tp == EventType.GameOver)
-        {
-            fsm.ChangeState((int)States.GameOver);
-            GameOver();
-        }
-    }
-
-    private void GameOver()
-    {
-        //Remove
-        Score = 5;
-
-        GameOverView gv = Instantiate(GameOverScreenPrefab);
-        gv.Fillout(Score);
     }
 
     private void ChangeLane(int laneIndex, bool jump = false)
     {
-        if(PlayerCharacter.CanChangeLane && laneIndex != CurrentLane)
+        if (PlayerCharacter.CanChangeLane && laneIndex != CurrentLane)
         {
-            PlayerCharacter.ChangeLane (Lanes [laneIndex].transform.position.y, jump);
+            PlayerCharacter.ChangeLane(Lanes[laneIndex].transform.position.y, jump);
             PlayerCharacter.ResetWave();
             CurrentLane = laneIndex;
         }
     }
 
-    private void StateTitle(StateMethod method, float deltaTime)
+    private void OnPlayerCharacterEnteredWave(Wave wave)
     {
-        //do nothing
+        if (wave.Source is PositiveWave)
+        {
+            Multiplier++;
+            Score += wave.Source.PointValue;
+        }
+        else
+        {
+            Multiplier = 1;
+        }
     }
 
-    private void StateStart(StateMethod method, float deltaTime)
+    private void StateTitle(StateMethod method, float deltaTime)
     {
-        switch(method)
+        switch (method)
         {
             case StateMethod.Enter:
-                Spawner.enabled = true;
-                Spawner.Init();
-                break;
+                {
+                    EventManager.Instance.SendEvent(EventType.PlayMusic, null);
+                    Reset();
+
+                    titleScreen = Instantiate(TitleScreenPrefab);
+                    break;
+                }
             case StateMethod.Update:
                 {
-                    fsm.ChangeState((int)States.Active);
+                    if (Input.anyKeyDown)
+                    {
+                        DestroyImmediate(titleScreen.gameObject);
+                        titleScreen = null;
+
+                        fsm.ChangeState((int)States.Active);
+                        return;
+                    }
                     break;
                 }
             case StateMethod.Exit:
-                Spawner.enabled = false;
-                break;
+                {
+                    break;
+                }
         }
     }
+
     private bool upPreviouslyKeyDown = false;
     private bool downPreviouslyKeyDown = false;
+
     private void StateActive(StateMethod method, float deltaTime)
     {
-        switch(method)
+        switch (method)
         {
             case StateMethod.Enter:
                 {
-                    Reset();
                     Spawner.enabled = true;
-                    
                     Spawner.Init();
+
                     Score = 0;
                     Multiplier = 1;
                     Level = 1;
@@ -211,6 +231,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
             case StateMethod.Update:
                 {
                     float verticalAxis = Input.GetAxis("Vertical");
+
                     if(verticalAxis > previousVerticalAxis)
                     {
                         if(previousVerticalAxis < 0)
@@ -244,55 +265,33 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
                             }
                         }
                     }
-                 /*   // Up
-                    if (Mathf.Approximately(previousVerticalAxis, 0f) && verticalAxis > 0.5f)
-                    {
-                        ChangeLane(Mathf.Max(0, CurrentLane - 1));
-                    }
 
-                    // Down
-                    if (Mathf.Approximately(previousVerticalAxis, 0f) &&  verticalAxis < -0.5f)
-                    {
-                        ChangeLane(Mathf.Min(Lanes.Count - 1, CurrentLane + 1));
-                    }
-                    Debug.Log(verticalAxis + " vs " + previousVerticalAxis);*/
                     previousVerticalAxis = verticalAxis;
                     break;
                 }
             case StateMethod.Exit:
                 {
-                    break;
-                }
-        }
-    }
+                    foreach (var lane in Lanes)
+                    {
+                        var children = lane.GetComponentsInChildren(typeof(MonoBehaviour));
 
-    private void OnPlayerCharacterEnteredWave(Wave wave)
-    {
-        if(wave.Source is PositiveWave)
-        {
-            Multiplier++;
-            Score += wave.Source.PointValue;
-        }
-        else
-        {
-            Multiplier = 1;
-        }
-    }
+                        foreach (var child in children)
+                        {
+                            DestroyImmediate(child.gameObject);
+                        }
+                    }
 
-    private void StateChangeLane(StateMethod method, float deltaTime)
-    {
-        switch(method)
-        {
-            case StateMethod.Enter:
-                {
-                    break;
-                }
-            case StateMethod.Update:
-                {
-                    break;
-                }
-            case StateMethod.Exit:
-                {
+                    if (ScrollingBackground != null)
+                    {
+                        ScrollingBackground.ScrollSpeed = 0f;
+                    }
+
+                    if (UpperPlayfield != null)
+                    {
+                        UpperPlayfield.enabled = false;
+                    }
+
+                    Spawner.enabled = false;
                     break;
                 }
         }
@@ -304,10 +303,21 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         {
             case StateMethod.Enter:
                 {
+                    EventManager.Instance.SendEvent(EventType.StopMusic, null);
+
+                    gameOverView = Instantiate(GameOverScreenPrefab);
+                    gameOverView.Fillout(Score);
                     break;
                 }
             case StateMethod.Update:
                 {
+                    if (gameOverView != null && gameOverView.IsDone)
+                    {
+                        DestroyImmediate(gameOverView.gameObject);
+                        gameOverView = null;
+
+                        fsm.ChangeState((int)States.Title);
+                    }
                     break;
                 }
             case StateMethod.Exit:

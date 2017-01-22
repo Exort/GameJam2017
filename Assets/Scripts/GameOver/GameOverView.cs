@@ -2,57 +2,64 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class GameOverView : MonoBehaviour {
     public Transform ScoreContainer;
-    public GameObject ScoreEntryObject;
-    public EnterYourName EnterYourNameTemplate;
-    private List<GameObject> scoreList = new List<GameObject>();
-    public List<HighScoreTool.HighScoreEntry> currentHighScores;
-    // Use this for initialization
-    void Start () {
-        currentHighScores = new List<HighScoreTool.HighScoreEntry>();
+    public ScoreEntry ScoreEntryObject;
 
+    private bool _done;
+
+    public bool IsDone
+    {
+        get
+        {
+            return _done;
+        }
     }
+
     private void SendHighScore(long score)
     {
-        HighScoreTool.Instance.SendHighScore("MTL", score);
-       // currentHighScores = HighScoreTool.SendHighScore("MTL", score);
     }
     public void Fillout(long score)
     {
-
-      
         while(ScoreContainer.childCount != 0)
         {
             Destroy(ScoreContainer.GetChild(0));
         }
 
+        HighScoreTool.HighScoreEntry newHighScoreEntry = null;
+        var highScores = HighScoreTool.Instance.highScores;
+        if(highScores.Count == 0 || HighScoreTool.Instance.highScores.Any(x => long.Parse(x.score) < score))
+        {
+            newHighScoreEntry = new HighScoreTool.HighScoreEntry ();
+            newHighScoreEntry.name = string.Empty;
+            newHighScoreEntry.score = score.ToString();
+            highScores.Add (newHighScoreEntry);
+        }
+
         /*DISPLAY HIGH SCORE SCREEN*/
         foreach (HighScoreTool.HighScoreEntry entr in HighScoreTool.Instance.highScores)
         {
-            GameObject obj = Instantiate(ScoreEntryObject, ScoreContainer);
-            obj.GetComponent<Text>().text = entr.name + " - " + entr.score;
-            scoreList.Add(obj);
-        }
-        if (currentHighScores.Count==0 || score > long.Parse(currentHighScores[currentHighScores.Count - 1].score))
-        {
-
-            Debug.Log("NEW HIGH SCORE!");
-            /*Should pop Enter Name UI*/
-            EnterYourName entr = Instantiate(EnterYourNameTemplate, ScoreContainer);
-            SendHighScore(score);
-
-
+            ScoreEntry scoreEntry = Instantiate(ScoreEntryObject, ScoreContainer, false);
+            scoreEntry.Score.text = entr.score;
+            scoreEntry.PlayerName.text = entr.name;
+            if(entr == newHighScoreEntry)
+            {
+                scoreEntry.NameEntered += OnNameEntered;
+                scoreEntry.PromptName ();
+            }
         }
     }
-	// Update is called once per frame
-	void Update () {
-		if(Input.anyKeyDown)
-        {
 
-            DestroyImmediate(this.gameObject);
-            Debug.Log("Destroy high score");
-        }
+    void OnNameEntered(string playerName, string score)
+    {
+        HighScoreTool.Instance.SendHighScore(playerName, long.Parse(score));
+        _done = true;
+    }
+
+	// Update is called once per frame
+	void Update () 
+    {
 	}
 }

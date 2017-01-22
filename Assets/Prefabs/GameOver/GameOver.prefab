@@ -98,7 +98,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 1
-  m_Spacing: 40
+  m_Spacing: 10
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -191,11 +191,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ScoreContainer: {fileID: 224467303429554470}
-  ScoreEntryObject: {fileID: 1457676363444076, guid: a692c6f03d01bc64aa6cad151c45050f,
+  ScoreEntryObject: {fileID: 114787748598044064, guid: a692c6f03d01bc64aa6cad151c45050f,
     type: 2}
-  EnterYourNameTemplate: {fileID: 114728748674458586, guid: 0d84ba3978a7d8241bb84d932b7dba09,
-    type: 2}
-  currentHighScores: []
 --- !u!114 &114952329052000798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -305,10 +302,10 @@ RectTransform:
   m_Father: {fileID: 224443076120458936}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -70}
-  m_SizeDelta: {x: 0, y: -140}
+  m_SizeDelta: {x: 500, y: -140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224658561512000720
 RectTransform:

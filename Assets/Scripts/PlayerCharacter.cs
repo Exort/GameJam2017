@@ -61,6 +61,14 @@ public class PlayerCharacter : MonoBehaviour
         waveDetector.EnteredWave += onEnteredWave;
     }
 
+    void OnDestroy()
+    {
+        if (waveDetector != null)
+        {
+            Destroy(waveDetector.gameObject);
+        }
+    }
+
     void Awake()
     {
         fsm.AddState(StateStanding);
