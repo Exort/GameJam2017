@@ -8,8 +8,9 @@ public class GameOverView : MonoBehaviour {
     public Transform ScoreContainer;
     public ScoreEntry ScoreEntryObject;
 
-    private bool _done;
+    private bool _enteringName;
 
+    private bool _done;
     public bool IsDone
     {
         get
@@ -30,12 +31,13 @@ public class GameOverView : MonoBehaviour {
 
         HighScoreTool.HighScoreEntry newHighScoreEntry = null;
         var highScores = HighScoreTool.Instance.highScores;
-        if(highScores.Count == 0 || HighScoreTool.Instance.highScores.Any(x => long.Parse(x.score) < score))
+        if(highScores.Count < 5 || HighScoreTool.Instance.highScores.Any(x => long.Parse(x.score) < score))
         {
             newHighScoreEntry = new HighScoreTool.HighScoreEntry ();
             newHighScoreEntry.name = string.Empty;
             newHighScoreEntry.score = score.ToString();
             highScores.Add (newHighScoreEntry);
+            _enteringName = true;
         }
 
         /*DISPLAY HIGH SCORE SCREEN*/
@@ -55,11 +57,15 @@ public class GameOverView : MonoBehaviour {
     void OnNameEntered(string playerName, string score)
     {
         HighScoreTool.Instance.SendHighScore(playerName, long.Parse(score));
-        _done = true;
+        _enteringName = false;
     }
 
 	// Update is called once per frame
 	void Update () 
     {
+        if(!_enteringName)
+        {
+            _done = Input.anyKeyDown;
+        }
 	}
 }

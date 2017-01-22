@@ -285,7 +285,7 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
 
                         foreach (var child in children)
                         {
-                            DestroyImmediate(child.gameObject);
+                            Destroy(child.gameObject);
                         }
                     }
 
