@@ -116,17 +116,28 @@ public class Level
     }
     private void FillObjects(float secondsToFill)
     {
-     
+
+        string log = "";
+       
         List<ObjectInstance> toAdd = new List<ObjectInstance>();
-        float endTime = Delay + secondsToFill;
-        for (float t = Delay; t < endTime; t += SecondsBetweenPositiveWave)
+        float endTime = ObjectFilledUpTo + secondsToFill;
+        log += "Generating objects between " + ObjectFilledUpTo + " and " + endTime + "\r\n";
+        log += "\r\n";
+        log += "Generating Positive waves  \r\n";
+        for (float t = ObjectFilledUpTo; t < endTime; t += SecondsBetweenPositiveWave)
         {
             System.Type tt = GetTypeToSpawn(PositiveWaveType);
+            
             ObjectInstance oi = (ObjectInstance)System.Activator.CreateInstance(tt);
             oi.Timestamp = t;
+            log += "Type : " + tt.ToString() + "\r\n";
+            log += "Lane : " + oi.LaneIndex.ToString() + "\r\n";
+            log += "Time : " + t.ToString() + "\r\n";
+            log += "\r\n";
             toAdd.Add(oi);
         }
-        float currentTime = Delay + getDelayBetweenObject();
+        log += "Generating negative wave\r\n";
+        float currentTime = ObjectFilledUpTo + getDelayBetweenObject();
       
         while (currentTime < endTime)
         {
@@ -148,16 +159,21 @@ public class Level
             ObjectInstance oi = (ObjectInstance)System.Activator.CreateInstance(toInstanciate);
             oi.Timestamp = currentTime;
             toAdd.Add(oi);
+            log += "Type : " + toInstanciate.ToString() + "\r\n";
+            log += "Lane : " + oi.LaneIndex.ToString() + "\r\n";
+            log += "Time : " + currentTime.ToString() + "\r\n";
+            log += "\r\n";
             currentTime += getDelayBetweenObject();
         }
     
 
-
+        
         toAdd.Sort(delegate (ObjectInstance o1, ObjectInstance o2)
        {
            return o1.Timestamp.CompareTo(o2.Timestamp);
        });
         theObjects.AddRange(toAdd);
+        Debug.Log(log);
         ObjectFilledUpTo = endTime;
 
     }
