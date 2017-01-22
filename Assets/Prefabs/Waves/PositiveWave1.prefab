@@ -114,7 +114,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  LineColor: {r: 0.78431374, g: 0.58431375, b: 0.9529412, a: 1}
+  LineColor: {r: 0, g: 0.9647059, b: 1, a: 1}
   MoveSpeed: 3.5
 --- !u!212 &212321657872050980
 SpriteRenderer:

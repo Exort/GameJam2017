@@ -182,6 +182,24 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 112861681}
+--- !u!1 &243492599 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1284992737519560, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+    type: 2}
+  m_PrefabInternal: {fileID: 1188688449}
+--- !u!114 &243492602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 243492599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16888f319d708db4ca6a0a53afc796a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScrollSpeed: 0.2
+  MaxSpeed: 0.2
 --- !u!1 &253022976
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,6 +684,11 @@ Prefab:
       propertyPath: m_LocalPosition.z
       value: -0
       objectReference: {fileID: 0}
+    - target: {fileID: 212002565045376754, guid: 31b25cfc83d03d344b4c5c7113d750ce,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 95beb14572588eb4fae6f240dd0d8964, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
   m_IsPrefabParent: 0
@@ -904,7 +927,7 @@ Prefab:
         type: 2}
       propertyPath: m_FontData.m_Font
       value: 
-      objectReference: {fileID: 12800000, guid: c8624c043c0865947bc81ec0bf0cf90a,
+      objectReference: {fileID: 12800000, guid: 15d621dcb07de40469ce41f314500e57,
         type: 3}
     - target: {fileID: 114170853413555058, guid: 7b90ba0d1ea2fff40913ac68c00d2b73,
         type: 2}
