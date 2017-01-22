@@ -12,7 +12,7 @@ public class Level
     private float Delay = 0;
     private float ObjectFilledUpTo = 0;
     public int targetScore = 0;
-    public float SecondsBetweenPositiveWave = 1f;
+    public float SecondsBetweenPositiveWave = 0.8f;
     
     public List<ObjectInstance> theObjects = new List<ObjectInstance>();
 
@@ -91,6 +91,13 @@ public class Level
         return retType;
 
     }
+    private float getSpeedMultiplier(int currentLevel)
+    {
+        float max = (float)currentLevel * 1.5f*100;
+        float min = (float)1/currentLevel * 100;
+        float ret = r.Next((int)(min), (int)max);
+        return ret / 100;
+    }
     private float getDelayBetweenObject()
     {
       
@@ -103,7 +110,7 @@ public class Level
         {
             minMSInterval = 0;
         }
-        int maxMSInterval = 5000;
+        int maxMSInterval = 2000;
         if(LevelNumber>3)
         {
             maxMSInterval = maxMSInterval - ((LevelNumber - 3) * 500);
@@ -116,6 +123,7 @@ public class Level
         int found = r.Next(minMSInterval, maxMSInterval);
         return (float)found/(float)1000;
     }
+    
     private void FillObjects(float secondsToFill)
     {
 
@@ -132,6 +140,7 @@ public class Level
             
             ObjectInstance oi = (ObjectInstance)System.Activator.CreateInstance(tt);
             oi.Timestamp = t;
+            oi.Speed = getSpeedMultiplier(LevelNumber);
             log += "Type : " + tt.ToString() + "\r\n";
             log += "Lane : " + oi.LaneIndex.ToString() + "\r\n";
             log += "Time : " + t.ToString() + "\r\n";
@@ -160,7 +169,9 @@ public class Level
             }
             ObjectInstance oi = (ObjectInstance)System.Activator.CreateInstance(toInstanciate);
             oi.Timestamp = currentTime;
+            oi.Speed = getSpeedMultiplier(LevelNumber);
             toAdd.Add(oi);
+
             log += "Type : " + toInstanciate.ToString() + "\r\n";
             log += "Lane : " + oi.LaneIndex.ToString() + "\r\n";
             log += "Time : " + currentTime.ToString() + "\r\n";
@@ -202,8 +213,8 @@ public class Level
         Delay += delaySinceLastCall;
         return ret;
     }
+    
 }
-
 public class WeightedType
 {
     public WeightedType(System.Type t, int w)
@@ -214,23 +225,22 @@ public class WeightedType
     public System.Type theType;
     public int Weight;
 }
-
 public abstract class ObjectInstance
 {
     public const int NbLanes = 5;
     public int PointValue = 0;
     public int LaneIndex = 0;
-    public int Speed = 0;
-    public int SpeedEffect = 0;
+    public float Speed = 0;
+    public bool Kill = false;
+   
     public float Timestamp = 0;
-
     public ObjectInstance()
     {
         SelectRandomLane();
     }
-
     private void SelectRandomLane()
     {
+      
         LaneIndex = Level.r.Next(0, NbLanes );
     }
 }
@@ -245,7 +255,7 @@ public class NegativeWave:ObjectInstance
 {
     public NegativeWave():base()
     {
-        SpeedEffect = -1;
+      
 
     }
 }
@@ -253,6 +263,7 @@ public class FireWall:ObjectInstance
 {
     public FireWall():base()
     {
+        Kill = true;
         PointValue = 1;
     }
 }
