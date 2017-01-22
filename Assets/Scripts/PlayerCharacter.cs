@@ -47,7 +47,7 @@ public class PlayerCharacter : MonoBehaviour
     void Start ()
     {
         MaxSpeed = 10;
-        CurrentSpeed = 0;
+        CurrentSpeed = 4;
         BaseSpeed = 0;
         KillPosition = -10;
 
