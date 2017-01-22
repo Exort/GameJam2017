@@ -23,9 +23,13 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
 
     private int _level = 0;
     private float previousVerticalAxis = 0f;
+    private float previousTouchAxis = 0f;
+
     private GameOverView gameOverView;
     private float _gameOverTimer = 0f;
     private TitleScreenHandler titleScreen;
+
+    private VerticalSwipeHelper _verticalSwipeHelper = new VerticalSwipeHelper();
 
     public int Level
     {
@@ -239,15 +243,19 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
                     PlayerCharacter.PickPacket += OnPlayerPickupPacket;
 
                     ChangeLane(2);
+
+                    _verticalSwipeHelper = new VerticalSwipeHelper ();
+                        
                     break;
-                }
+                 }
             case StateMethod.Update:
                 {
                     float verticalAxis = Input.GetAxis("Vertical");
+                    var touchAxis = _verticalSwipeHelper.UpdateAxisValue ();
 
-                    if(verticalAxis > previousVerticalAxis)
-                    {
-                        if(previousVerticalAxis < 0)
+                if(verticalAxis > previousVerticalAxis || touchAxis > previousTouchAxis)
+                     {
+                    if(previousVerticalAxis < 0 || previousTouchAxis < 0)
                         {
                             downPreviouslyKeyDown = false;
                         }
@@ -262,9 +270,9 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
                     }
                     else
                     {
-                        if(verticalAxis < previousVerticalAxis)
+                    if(verticalAxis < previousVerticalAxis || touchAxis < previousTouchAxis)
                         {
-                            if(previousVerticalAxis > 0)
+                        if(previousVerticalAxis > 0 || previousTouchAxis > 0)
                             {
                                 upPreviouslyKeyDown = false;
                             }
@@ -279,7 +287,8 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
                         }
                     }
 
-                    previousVerticalAxis = verticalAxis;
+                previousVerticalAxis = verticalAxis;
+                previousTouchAxis = touchAxis;
                     break;
                 }
             case StateMethod.Exit:
