@@ -57,7 +57,7 @@ public class GameOverView : MonoBehaviour {
     void OnNameEntered(string playerName, string score)
     {
         HighScoreTool.Instance.SendHighScore(playerName, long.Parse(score));
-        _enteringName = true;
+        _enteringName = false;
     }
 
 	// Update is called once per frame
