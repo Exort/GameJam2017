@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WaveWidth: 40
-  WaveHeight: 18
+  WaveHeight: 15
   WaveCurve:
     serializedVersion: 2
     m_Curve:
@@ -102,12 +102,12 @@ MonoBehaviour:
     - serializedVersion: 2
       time: 0.19941805
       value: 0.25869966
-      inSlope: 0.75550115
-      outSlope: 0.75550115
+      inSlope: 1.1226516
+      outSlope: 1.1226516
       tangentMode: 136
     - serializedVersion: 2
-      time: 0.70333344
-      value: 0.55331296
+      time: 0.7293419
+      value: 0.84533
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -155,5 +155,5 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0

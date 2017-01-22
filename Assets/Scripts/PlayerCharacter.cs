@@ -89,7 +89,7 @@ public class PlayerCharacter : MonoBehaviour
             CurrentSpeed = 0;
         }
 
-        playerBody.velocity = new Vector2(CurrentSpeed, 0);
+        playerBody.position = new Vector2(playerBody.position.x + CurrentSpeed * Time.deltaTime, playerBody.position.y);
 
         if (playerBody.position.x < KillPosition)
         {

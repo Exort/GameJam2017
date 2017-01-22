@@ -36,17 +36,11 @@ public class Wave : MonoBehaviour
 
     void OnEnable()
     {
-
-            
-      
         HighestPoint = 0;
-   
+
         foreach(Keyframe k in WaveCurve.keys)
         {
-            if(k.value > HighestPoint)
-            {
-                HighestPoint = k.value;
-            }
+            HighestPoint = Mathf.Max(HighestPoint, k.value);
         }
        
         var spriteRenderer = GetComponent<SpriteRenderer>();
@@ -56,6 +50,7 @@ public class Wave : MonoBehaviour
 
         waveTexture = new Texture2D(WaveWidth, WaveHeight);
         waveTexture.filterMode = FilterMode.Point;
+
         Color[] transparent = new Color[WaveWidth * WaveHeight];
         for (int i = 0; i < transparent.Length; ++i)
         {
@@ -74,7 +69,8 @@ public class Wave : MonoBehaviour
 
         spriteRenderer.sprite = Sprite.Create(waveTexture, new Rect(0, 0, WaveWidth, WaveHeight), Vector2.zero);
 
-        boxCollider.size = new Vector2((WaveWidth - 4) / 100f, (WaveHeight -4) / 100f);
+        boxCollider.size = new Vector2(WaveWidth / 100f, WaveHeight / 100f);
+        boxCollider.offset = new Vector2(WaveWidth / 100f / 2f, WaveHeight / 100f / 2f);
     }
 
     void OnDisable()
