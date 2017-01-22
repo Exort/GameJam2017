@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : BaseSingleton<GameManager>, EventListener
 {
+    const float GameOverDuration = 2f;
+
     public ScrollHorizontal UpperPlayfield;
     public ScrollHorizontal ScrollingBackground;
     public GameOverView GameOverScreenPrefab;
@@ -22,6 +24,7 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
     private int _level = 0;
     private float previousVerticalAxis = 0f;
     private GameOverView gameOverView;
+    private float _gameOverTimer = 0f;
     private TitleScreenHandler titleScreen;
 
     public int Level
@@ -80,7 +83,8 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
     {
         Title,
         Active,
-        GameOver
+        GameOver,
+        HighScore
     };
 
     void Awake()
@@ -88,6 +92,7 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
         fsm.AddState(StateTitle);
         fsm.AddState(StateActive);
         fsm.AddState(StateGameOver);
+        fsm.AddState(StateHighScore);
 
         EventManager.Instance.Register(this);
     }
@@ -312,19 +317,15 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
             case StateMethod.Enter:
                 {
                     EventManager.Instance.SendEvent(EventType.StopMusic, null);
-
-                    gameOverView = Instantiate(GameOverScreenPrefab);
-                    gameOverView.Fillout(Score);
+                    _gameOverTimer = 0;
                     break;
                 }
             case StateMethod.Update:
                 {
-                    if (gameOverView != null && gameOverView.IsDone)
+                    _gameOverTimer += deltaTime;
+                    if(_gameOverTimer >= GameOverDuration)
                     {
-                        DestroyImmediate(gameOverView.gameObject);
-                        gameOverView = null;
-
-                        fsm.ChangeState((int)States.Title);
+                        fsm.ChangeState((int)States.HighScore);
                     }
                     break;
                 }
@@ -332,6 +333,32 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
                 {
                     break;
                 }
+        }
+    }
+
+    private void StateHighScore(StateMethod method, float deltaTime)
+    {
+        switch (method) {
+        case StateMethod.Enter:
+            {
+                gameOverView = Instantiate (GameOverScreenPrefab);
+                gameOverView.Fillout (Score);
+                break;
+            }
+        case StateMethod.Update:
+            {
+                if (gameOverView != null && gameOverView.IsDone) {
+                    DestroyImmediate (gameOverView.gameObject);
+                    gameOverView = null;
+
+                    fsm.ChangeState ((int)States.Title);
+                }
+                break;
+            }
+        case StateMethod.Exit:
+            {
+                break;
+            }
         }
     }
 }
