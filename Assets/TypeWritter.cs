@@ -6,6 +6,7 @@ public class TypeWritter : MonoBehaviour
 {
     public float WriteDelay = 0.125f;
 
+    private AudioSource audioSource;
     private Text txt;
     private string story;
     private int typeIndex = 0;
@@ -14,6 +15,7 @@ public class TypeWritter : MonoBehaviour
     void Awake()
     {
         txt = GetComponent<Text>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -33,6 +35,12 @@ public class TypeWritter : MonoBehaviour
 
             if (writerTimer >= WriteDelay)
             {
+                if (!char.IsWhiteSpace(story[typeIndex]))
+                //if (!audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
+
                 txt.text += story[typeIndex];
                 typeIndex++;
 
