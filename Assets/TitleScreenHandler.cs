@@ -3,29 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TitleScreenHandler : MonoBehaviour {
-
-    public GameManager theUi;
-
+public class TitleScreenHandler : MonoBehaviour
+{
     public float BlinkTime = 0.4f;
     public Text AnyKeyComponent;
     public Image GlowImage;
     private float blinkTimer;
 
-	// Use this for initialization
 	void Start () {
         blinkTimer = 0f;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        if(Input.anyKeyDown)
-        {
-            EventManager.Instance.SendEvent(EventType.StartGame, null);
-            DestroyImmediate(this.gameObject);
-            return;
-        }
 
+	void Update () {
         blinkTimer += Time.deltaTime;
 
         if (GlowImage != null)
@@ -44,7 +33,7 @@ public class TitleScreenHandler : MonoBehaviour {
             if (AnyKeyComponent != null)
             {
                 AnyKeyComponent.enabled = !AnyKeyComponent.enabled;
-             
+
                 blinkTimer = 0f;
             }
         }

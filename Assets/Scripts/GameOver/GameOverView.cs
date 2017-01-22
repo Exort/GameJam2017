@@ -48,11 +48,6 @@ public class GameOverView : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-		if(Input.anyKeyDown)
-        {
-
-            DestroyImmediate(this.gameObject);
-            Debug.Log("Destroy high score");
-        }
+		
 	}
 }

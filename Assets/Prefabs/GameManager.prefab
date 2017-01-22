@@ -103,7 +103,6 @@ GameObject:
   - component: {fileID: 4202917489387706}
   - component: {fileID: 212002565045376754}
   - component: {fileID: 114880032547268926}
-  - component: {fileID: 114560057906344694}
   m_Layer: 0
   m_Name: UpperPlayfield
   m_TagString: Untagged
@@ -297,19 +296,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScrollSpeed: 1
   MaxSpeed: 3.7
---- !u!114 &114560057906344694
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1284992737519560}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16888f319d708db4ca6a0a53afc796a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ScrollSpeed: 0.2
-  MaxSpeed: 0.2
 --- !u!114 &114594478330121478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -347,8 +333,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4d0f43cde6bd5459fe181344eef890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UpperPlayfield: {fileID: 114880032547268926}
   ScrollingBackground: {fileID: 114100640142718394}
   GameOverScreenPrefab: {fileID: 114906080450569508, guid: b21b2dc4c0aa6ea4cac888c36deff4a9,
+    type: 2}
+  TitleScreenPrefab: {fileID: 114460281573241302, guid: 34b723f01a7de4d4ab11d97f4677c45d,
     type: 2}
   GameUI: {fileID: 0}
   Spawner: {fileID: 114594478330121478}
