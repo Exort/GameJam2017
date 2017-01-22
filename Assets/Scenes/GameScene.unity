@@ -182,24 +182,6 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 112861681}
---- !u!1 &243492599 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1284992737519560, guid: 31b25cfc83d03d344b4c5c7113d750ce,
-    type: 2}
-  m_PrefabInternal: {fileID: 1188688449}
---- !u!114 &243492602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 243492599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16888f319d708db4ca6a0a53afc796a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ScrollSpeed: 0.2
-  MaxSpeed: 0.2
 --- !u!1 &253022976
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,11 +569,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
-        type: 2}
-      propertyPath: WindowsLogoTemplates.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4103165091381372, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -633,73 +610,6 @@ Prefab:
       propertyPath: GameUI
       value: 
       objectReference: {fileID: 2035305423}
-    - target: {fileID: 4202917489387706, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 4.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4202917489387706, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4181400290608400, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 4181400290608400, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4181400290608400, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 4153101836598330, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0.88
-      objectReference: {fileID: 0}
-    - target: {fileID: 4153101836598330, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4153101836598330, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 4373218420376410, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4373218420376410, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 4373218420376410, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4334006477598310, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 4334006477598310, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -1.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 4334006477598310, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 212002565045376754, guid: 31b25cfc83d03d344b4c5c7113d750ce,
-        type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 95beb14572588eb4fae6f240dd0d8964, type: 2}
-    - target: {fileID: 114594478330121478, guid: 31b25cfc83d03d344b4c5c7113d750ce,
-        type: 2}
-      propertyPath: WindowsLogoTemplates.Array.data[0]
-      value: 
-      objectReference: {fileID: 114746031466211802, guid: 5bab4c0c0cdedd04ab68cffdfb173252,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 31b25cfc83d03d344b4c5c7113d750ce, type: 2}
   m_IsPrefabParent: 0
