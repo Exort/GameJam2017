@@ -22,7 +22,6 @@ public class GameOverView : MonoBehaviour {
 
         HighScoreTool.HighScoreEntry newHighScoreEntry = null;
         var highScores = HighScoreTool.Instance.highScores;
-        highScores.Clear ();
         if(highScores.Count == 0 || HighScoreTool.Instance.highScores.Any(x => long.Parse(x.score) < score))
         {
             newHighScoreEntry = new HighScoreTool.HighScoreEntry ();
