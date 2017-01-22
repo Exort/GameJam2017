@@ -22,24 +22,54 @@ public class ScoreEntry : MonoBehaviour
         _nameEnterIndex = 0;
         _previousVerticalAxis = 0;
     }
-
+    private bool upPreviouslyKeyDown = false;
+    private bool downPreviouslyKeyDown = false;
     void Update()
     {
         if(_nameEnterIndex >= 0)
         {
+           
             float verticalAxis = Input.GetAxis("Vertical");
 
-            // Up
-            if (Mathf.Approximately(_previousVerticalAxis, 0f) && verticalAxis > 0)
+            if (verticalAxis > _previousVerticalAxis)
             {
-                PlayerName.text = ReplaceCharAtIndex(PlayerName.text, CycleChar(PlayerName.text [_nameEnterIndex], 1), _nameEnterIndex);
+                if (_previousVerticalAxis < 0)
+                {
+                    downPreviouslyKeyDown = false;
+                }
+                else
+                {
+                    if (!upPreviouslyKeyDown)
+                    {
+                        upPreviouslyKeyDown = true;
+                        PlayerName.text = ReplaceCharAtIndex(PlayerName.text, CycleChar(PlayerName.text[_nameEnterIndex], 1), _nameEnterIndex);
+                    }
+                }
             }
-            // Down
-            else if (Mathf.Approximately(_previousVerticalAxis, 0f) &&  verticalAxis < 0)
+            else
             {
-                PlayerName.text = ReplaceCharAtIndex(PlayerName.text, CycleChar(PlayerName.text [_nameEnterIndex], -1), _nameEnterIndex);
+                if (verticalAxis < _previousVerticalAxis)
+                {
+                    if (_previousVerticalAxis > 0)
+                    {
+                        upPreviouslyKeyDown = false;
+                    }
+                    else
+                    {
+                        if (!downPreviouslyKeyDown)
+                        {
+                            downPreviouslyKeyDown = true;
+                            PlayerName.text = ReplaceCharAtIndex(PlayerName.text, CycleChar(PlayerName.text[_nameEnterIndex], -1), _nameEnterIndex);
+                        }
+                    }
+                }
             }
-            else if(Input.GetButtonDown("Jump"))
+
+            _previousVerticalAxis = verticalAxis;
+
+
+
+           if(Input.GetButtonDown("Jump"))
             {
                 _nameEnterIndex++;
 
