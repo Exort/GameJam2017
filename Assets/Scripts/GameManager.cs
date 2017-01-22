@@ -205,6 +205,9 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
         }
     }
 
+    private bool upPreviouslyKeyDown = false;
+    private bool downPreviouslyKeyDown = false;
+
     private void StateActive(StateMethod method, float deltaTime)
     {
         switch (method)
@@ -229,16 +232,38 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
                 {
                     float verticalAxis = Input.GetAxis("Vertical");
 
-                    // Up
-                    if (Mathf.Approximately(previousVerticalAxis, 0f) && verticalAxis > 0)
+                    if(verticalAxis > previousVerticalAxis)
                     {
-                        ChangeLane(Mathf.Max(0, CurrentLane - 1));
+                        if(previousVerticalAxis < 0)
+                        {
+                            downPreviouslyKeyDown = false;
+                        }
+                        else
+                        {
+                            if(!upPreviouslyKeyDown)
+                            {
+                                upPreviouslyKeyDown = true;
+                                ChangeLane(Mathf.Max(0, CurrentLane - 1));
+                            }
+                        }
                     }
-
-                    // Down
-                    if (Mathf.Approximately(previousVerticalAxis, 0f) && verticalAxis < 0)
+                    else
                     {
-                        ChangeLane(Mathf.Min(Lanes.Count - 1, CurrentLane + 1));
+                        if(verticalAxis < previousVerticalAxis)
+                        {
+                            if(previousVerticalAxis > 0)
+                            {
+                                upPreviouslyKeyDown = false;
+                            }
+                            else
+                            {
+                                if(!downPreviouslyKeyDown)
+                                {
+                                    downPreviouslyKeyDown = true;
+                                    ChangeLane(Mathf.Min(Lanes.Count - 1, CurrentLane + 1));
+                                }
+                            }
+                        }
                     }
 
                     previousVerticalAxis = verticalAxis;
