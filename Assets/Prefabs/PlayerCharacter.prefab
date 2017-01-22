@@ -170,12 +170,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxSpeed: 6
-  CurrentSpeed: 0
+  CurrentSpeed: 4
   BaseSpeed: 0
   KillPosition: 0
   BoostVelocity: 5
-  WaterVelocity: 0.4
-  LowestSpeed: -2
+  WaterVelocity: 0.6
+  LowestSpeed: -3.5
   MaxPosition: 7
   LaneChangeSpeed: 5
   WaveDetectorPrefab: {fileID: 114211556686256816, guid: 98915769334c1aa45a94c7cc0c715463,

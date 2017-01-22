@@ -10,7 +10,7 @@ public class Wave : MonoBehaviour
     public int WaveHeight;
     public AnimationCurve WaveCurve;
     public Color LineColor;
-
+    public bool HasBeenEntered { get; set; }
     public float MoveSpeed;
 
     public float ScreenWaveWidth
@@ -36,8 +36,8 @@ public class Wave : MonoBehaviour
     void OnEnable()
     {
         HighestPoint = 0;
-
-        foreach(Keyframe k in WaveCurve.keys)
+        HasBeenEntered = false;
+        foreach (Keyframe k in WaveCurve.keys)
         {
             HighestPoint = Mathf.Max(HighestPoint, k.value);
         }

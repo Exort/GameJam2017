@@ -187,17 +187,36 @@ public class PlayerCharacter : MonoBehaviour
         var handler = EnteredWave;
         if (handler != null)
         {
+            bool DoApply = true;
             if (Mathf.Sign(wave.MoveSpeed) > 0f)
             {
-                audioSource.PlayOneShot(GoodWaveSound);
-                CurrentSpeed += BoostVelocity;
+                
+                if(!wave.HasBeenEntered)
+                {
+                    wave.HasBeenEntered = true;
+                }
+                else
+                {
+                    DoApply = false;
+                }
+               
             }
-            else
+           
+            if (DoApply)
             {
-                audioSource.PlayOneShot(BadWaveSound);
-                CurrentSpeed = 0f;
-            }
+                if (Mathf.Sign(wave.MoveSpeed) > 0f)
+                {
+                    audioSource.PlayOneShot(GoodWaveSound);
 
+                }
+                else
+                {
+                    audioSource.PlayOneShot(BadWaveSound);
+
+                }
+                CurrentSpeed += wave.MoveSpeed * 5;
+            }
+            
             handler.Invoke(wave);
         }
     }
