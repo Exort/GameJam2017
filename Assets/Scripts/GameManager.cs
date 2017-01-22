@@ -44,6 +44,10 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         set 
         {
             _score = value;
+            if(_score >= Spawner.GetTargetScore())
+            {
+                Spawner.NextLevel();
+            }
             GameUI.ScoreText.text = _score.ToString();
         }
     }
