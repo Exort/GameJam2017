@@ -9,7 +9,7 @@ public class TitleScreenHandler : MonoBehaviour {
 
     public float BlinkTime = 0.4f;
     public Text AnyKeyComponent;
-
+    public Image GlowImage;
     private float blinkTimer;
 
 	// Use this for initialization
@@ -27,11 +27,21 @@ public class TitleScreenHandler : MonoBehaviour {
         }
 
         blinkTimer += Time.deltaTime;
+        
+        Color c = GlowImage.color;
+        c.a = blinkTimer / BlinkTime ;
+        if(AnyKeyComponent.enabled)
+        {
+            c.a = 1 - c.a;
+        }
+        GlowImage.color = c;
+       
         if (blinkTimer >= BlinkTime)
         {
             if (AnyKeyComponent != null)
             {
                 AnyKeyComponent.enabled = !AnyKeyComponent.enabled;
+             
                 blinkTimer = 0f;
             }
         }
