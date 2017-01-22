@@ -32,7 +32,15 @@ public class Wave : MonoBehaviour
     private Texture2D waveTexture;
     private BoxCollider2D boxCollider;
     private Rigidbody2D waveBody;
-
+    public void ApplySource(ObjectInstance theSource)
+    {
+        Source = theSource;
+        if(theSource is NegativeWave)
+        {
+            Debug.Log("neg");
+        }
+        MoveSpeed *= Source.Speed;
+    }
     void OnEnable()
     {
         HighestPoint = 0;
@@ -41,7 +49,7 @@ public class Wave : MonoBehaviour
         {
             HighestPoint = Mathf.Max(HighestPoint, k.value);
         }
-
+        
         var spriteRenderer = GetComponent<SpriteRenderer>();
 
         boxCollider = GetComponent<BoxCollider2D>();

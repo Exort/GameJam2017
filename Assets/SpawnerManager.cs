@@ -40,9 +40,8 @@ public class SpawnerManager : MonoBehaviour {
                 {
                     int index = r.Next(0, PositiveWaveTemplates.Count);
                     Wave obj = Instantiate(PositiveWaveTemplates[index], GameManager.Lanes[inst.LaneIndex].transform,false);
-                    obj.enabled = false;
-                    obj.Source = inst;
-                    obj.enabled = true;
+                    obj.ApplySource(inst);
+                    
 
                 }
                 if (inst is NegativeWave)
@@ -53,9 +52,7 @@ public class SpawnerManager : MonoBehaviour {
                     Vector3 t = obj.transform.position;
                     t.x *= -1;
                     obj.transform.position = t;
-                    obj.enabled = false;
-                    obj.Source = inst;
-                    obj.enabled = true;
+                    obj.ApplySource(inst);
                 }
                 if (inst is FireWall)
                 {
@@ -65,9 +62,7 @@ public class SpawnerManager : MonoBehaviour {
                     Vector3 t = obj.transform.position;
                     t.x *= -1;
                     obj.transform.position = t;
-                    obj.enabled = false;
-                    obj.Source = inst;
-                    obj.enabled = true;
+                    obj.ApplySource(inst);
                 }
             }
            

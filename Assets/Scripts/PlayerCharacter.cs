@@ -214,7 +214,7 @@ public class PlayerCharacter : MonoBehaviour
                     audioSource.PlayOneShot(BadWaveSound);
 
                 }
-                CurrentSpeed += wave.MoveSpeed * 5;
+                CurrentSpeed += wave.MoveSpeed * 8;
             }
             
             handler.Invoke(wave);
