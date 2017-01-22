@@ -11,6 +11,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
     public SpawnerManager Spawner;
     public List<GameObject> Lanes;
     public PlayerCharacter PlayerPrefab;
+    public float StartScrollSpeed = 0.25f;
 
     public float PlayerOffset = -2.25f;
     public float ScrollIncrement = 0.25f;
@@ -56,7 +57,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         {
             _multiplier = value;
             GameUI.MultiplierText.text = "X" + _multiplier.ToString();
-            ScrollingBackground.ScrollSpeed = ScrollIncrement * Multiplier;
+            ScrollingBackground.ScrollSpeed = StartScrollSpeed + ScrollIncrement * value;
         }
     }
 
@@ -104,7 +105,7 @@ public class GameManager : BaseSingleton<GameManager> , EventListener
         _multiplier = 0;
         if (ScrollingBackground != null)
         {
-            ScrollingBackground.ScrollSpeed = 0;
+            ScrollingBackground.ScrollSpeed = StartScrollSpeed;
         }
         _score = 0;
 

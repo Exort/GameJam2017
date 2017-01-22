@@ -5,16 +5,21 @@ using UnityEngine;
 public class ScrollHorizontal : MonoBehaviour 
 {
     public float ScrollSpeed = 1f;
+    public float MaxSpeed = 4f;
+
+    private float offset;
+
     private Renderer rend;
 
-    void Start() 
+    void Start()
     {
         rend = GetComponent<Renderer>();
     }
 
-    void Update() 
+    void Update()
     {
-        float offset = Time.time * ScrollSpeed;
-        rend.material.SetTextureOffset("_MainTex", new Vector2(offset, 0));
+        offset += Time.deltaTime * Mathf.Clamp(ScrollSpeed, 0f, MaxSpeed) / 2;
+
+        rend.material.mainTextureOffset = new Vector2(offset, 0f);
     }
 }
