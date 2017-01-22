@@ -91,44 +91,6 @@ NavMeshSettings:
     cellSize: 0.16666667
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &56728046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114129722903414586, guid: 34b723f01a7de4d4ab11d97f4677c45d,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1537885399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: c8624c043c0865947bc81ec0bf0cf90a, type: 3}
-    m_FontSize: 90
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 90
-    m_Alignment: 7
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 'Press Any Key
-
-    To Ride
-
-'
 --- !u!1 &112861681
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,7 +246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   theUi: {fileID: 1669117692}
   BlinkTime: 0.4
-  AnyKeyComponent: {fileID: 56728046}
+  AnyKeyComponent: {fileID: 1537885402}
   GlowImage: {fileID: 253022977}
 --- !u!114 &667570367
 MonoBehaviour:
@@ -645,7 +607,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1537885401}
   - component: {fileID: 1537885400}
-  - component: {fileID: 56728046}
+  - component: {fileID: 1537885402}
   m_Layer: 5
   m_Name: Press Any Key
   m_TagString: Untagged
@@ -676,9 +638,36 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -419, y: 45}
-  m_SizeDelta: {x: 1920, y: 1060}
+  m_AnchoredPosition: {x: -463, y: 0}
+  m_SizeDelta: {x: 994, y: 549}
   m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &1537885402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1537885399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: e41fd5d01a4e7a345ab700a0353fa362, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!114 &1669117692 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114692312790337460, guid: 31b25cfc83d03d344b4c5c7113d750ce,
