@@ -102,7 +102,7 @@ public class Level
         {
             minMSInterval = 0;
         }
-        int maxMSInterval = 5000;
+        int maxMSInterval = 2000;
         if(LevelNumber>3)
         {
             maxMSInterval = maxMSInterval - ((LevelNumber - 3) * 500);
