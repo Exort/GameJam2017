@@ -9,12 +9,17 @@ public class SpawnerManager : MonoBehaviour {
     public List<Wave> NegativeWaveTemplates;
     Level currentLevel;
 	// Use this for initialization
+    public int GetTargetScore()
+    {
+        return currentLevel.targetScore;
+    }
 	void Start () {
 		
 	}
     public void NextLevel()
     {
         currentLevel.NextLevel();
+        GameManager.GameUI.LevelText.text = "Level " + currentLevel.LevelNumber.ToString();
     }
     public void Init()
     {
@@ -24,11 +29,7 @@ public class SpawnerManager : MonoBehaviour {
     }
     // Update is called once per frame
     void Update () {
-        if(Input.GetKeyDown(KeyCode.U))
-        {
-            currentLevel.NextLevel();
-            GameManager.GameUI.LevelText.text = "Level " + currentLevel.LevelNumber.ToString();
-        }
+        
         if (currentLevel != null)
         {
             List<ObjectInstance> objs = currentLevel.GetObjectsToSpawn(Time.deltaTime);

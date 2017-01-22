@@ -11,6 +11,7 @@ public class Level
      public float NegativeWeight;
     private float Delay = 0;
     private float ObjectFilledUpTo = 0;
+    public int targetScore = 0;
     public float SecondsBetweenPositiveWave = 1f;
     
     public List<ObjectInstance> theObjects = new List<ObjectInstance>();
@@ -29,7 +30,7 @@ public class Level
     }
     private void InitLevel()
     {
-        
+        targetScore += (20 * LevelNumber);
         SpeedMultiplier = (float)LevelNumber / (float)10.0;
         ShuffleObjectType();
         PositiveWeight = ((float)1 / (float)LevelNumber) * 100;
