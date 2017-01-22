@@ -10,8 +10,7 @@ public class Wave : MonoBehaviour
     public int WaveHeight;
     public AnimationCurve WaveCurve;
     public Color LineColor;
-    
-   
+
     public float MoveSpeed;
 
     public float ScreenWaveWidth
@@ -42,14 +41,13 @@ public class Wave : MonoBehaviour
         {
             HighestPoint = Mathf.Max(HighestPoint, k.value);
         }
-       
+
         var spriteRenderer = GetComponent<SpriteRenderer>();
 
         boxCollider = GetComponent<BoxCollider2D>();
         waveBody = GetComponent<Rigidbody2D>();
 
         waveTexture = new Texture2D(WaveWidth, WaveHeight);
-        waveTexture.filterMode = FilterMode.Point;
 
         Color[] transparent = new Color[WaveWidth * WaveHeight];
         for (int i = 0; i < transparent.Length; ++i)
@@ -58,12 +56,11 @@ public class Wave : MonoBehaviour
         }
         waveTexture.SetPixels(transparent);
 
-        for (int width = 0; width < WaveWidth - 1; ++width)
+        for (int width = 0; width < WaveWidth; ++width)
         {
             float startCurvePoint = WaveCurve.Evaluate((float)width / (float)WaveWidth) * (float)WaveHeight;
-            float endCurvePoint = WaveCurve.Evaluate((float)(width + 1) / (float)WaveWidth) * (float)WaveHeight;
 
-            DrawLine(waveTexture, width, (int)(startCurvePoint), width + 1, (int)(endCurvePoint), LineColor);
+            DrawLine(waveTexture, width, (int)startCurvePoint, width, 0, LineColor);
         }
         waveTexture.Apply();
 
@@ -71,11 +68,6 @@ public class Wave : MonoBehaviour
 
         boxCollider.size = new Vector2(WaveWidth / 100f, WaveHeight / 100f);
         boxCollider.offset = new Vector2(WaveWidth / 100f / 2f, WaveHeight / 100f / 2f);
-    }
-
-    void OnDisable()
-    {
-
     }
 
     void Update()
