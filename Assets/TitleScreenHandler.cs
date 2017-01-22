@@ -8,7 +8,7 @@ public class TitleScreenHandler : MonoBehaviour {
     public GameManager theUi;
 
     public float BlinkTime = 0.4f;
-    public Text AnyKeyComponent;
+    public Image AnyKeyComponent;
     public Image GlowImage;
     private float blinkTimer;
 
