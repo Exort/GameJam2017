@@ -164,8 +164,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: KEVEN BOILY - Pier-Olivier Desbiens - MICHAEL LAROUCHE- ELIE RODRIGE - MARIO
-    J. RAMOS
+  m_Text: KEVEN BOILY - Pier-Olivier Desbiens - MICHAEL LAROUCHE- ELIE RODRIGUE -
+    MARIO J. RAMOS
 --- !u!114 &114141459606955404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -266,8 +266,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: KEVEN BOILY - Pier-Olivier Desbiens - MICHAEL LAROUCHE- ELIE RODRIGE - MARIO
-    J. RAMOS
+  m_Text: KEVEN BOILY - Pier-Olivier Desbiens - MICHAEL LAROUCHE- ELIE RODRIGUE -
+    MARIO J. RAMOS
 --- !u!114 &114595381392200826
 MonoBehaviour:
   m_ObjectHideFlags: 1
