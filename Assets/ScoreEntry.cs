@@ -67,8 +67,6 @@ public class ScoreEntry : MonoBehaviour
 
             _previousVerticalAxis = verticalAxis;
 
-
-
            if(Input.GetButtonDown("Jump"))
             {
                 _nameEnterIndex++;
