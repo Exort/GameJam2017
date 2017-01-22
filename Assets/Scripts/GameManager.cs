@@ -350,8 +350,12 @@ public class GameManager : BaseSingleton<GameManager>, EventListener
         switch (method) {
         case StateMethod.Enter:
             {
+                #if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
+                fsm.ChangeState ((int)States.Title);
+                #else
                 gameOverView = Instantiate (GameOverScreenPrefab);
                 gameOverView.Fillout (Score);
+                #endif
                 break;
             }
         case StateMethod.Update:
