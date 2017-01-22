@@ -209,21 +209,24 @@ public class PlayerCharacter : MonoBehaviour
 
     private void onObjectEnter(GameObject obj)
     {
-        var lethalEnemy = obj.GetComponent<LethalEnemy>();
-        if (lethalEnemy != null)
+        if (CanChangeLane)
         {
-            fsm.ChangeState((int)States.Dead);
-        }
-
-        var packet = obj.GetComponent<PickupPacket>();
-        if (packet != null)
-        {
-            audioSource.PlayOneShot(PickupSound);
-
-            var handler = PickPacket;
-            if (handler != null)
+            var lethalEnemy = obj.GetComponent<LethalEnemy>();
+            if (lethalEnemy != null)
             {
-                handler.Invoke(packet);
+                fsm.ChangeState((int)States.Dead);
+            }
+
+            var packet = obj.GetComponent<PickupPacket>();
+            if (packet != null)
+            {
+                audioSource.PlayOneShot(PickupSound);
+
+                var handler = PickPacket;
+                if (handler != null)
+                {
+                    handler.Invoke(packet);
+                }
             }
         }
     }
