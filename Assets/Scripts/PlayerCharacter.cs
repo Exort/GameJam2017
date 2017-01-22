@@ -4,7 +4,6 @@ using System;
 
 public class PlayerCharacter : MonoBehaviour
 {
-  
     public float MaxSpeed;
     public float CurrentSpeed;
     public float BaseSpeed;
@@ -13,16 +12,21 @@ public class PlayerCharacter : MonoBehaviour
     public float WaterVelocity = 5;
     public float LowestSpeed = -5;
     public float MaxPosition = 7;
+    public float LaneChangeSpeed = 5f;
+    public PlayerWaveDetector WaveDetectorPrefab;
+    public AudioClip GoodWaveSound;
+    public AudioClip BadWaveSound;
+
     private enum States
     {
         Standing,
         ChangingLane
     };
+
     private bool Dead = false;
-    public float LaneChangeSpeed = 5f;
-    public PlayerWaveDetector WaveDetectorPrefab;
 
     private Rigidbody2D playerBody;
+    private AudioSource audioSource;
     private PlayerWaveDetector waveDetector;
 
     private float _targetY;
@@ -42,13 +46,13 @@ public class PlayerCharacter : MonoBehaviour
 
     void Start ()
     {
-
         MaxSpeed = 10;
         CurrentSpeed = 0;
         BaseSpeed = 0;
         KillPosition = -10;
 
         playerBody = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
 
         waveDetector = Instantiate(WaveDetectorPrefab, transform.position, Quaternion.identity);
         waveDetector.PlayerBody = playerBody;
@@ -185,10 +189,12 @@ public class PlayerCharacter : MonoBehaviour
         {
             if (Mathf.Sign(wave.MoveSpeed) > 0f)
             {
+                audioSource.PlayOneShot(GoodWaveSound);
                 CurrentSpeed += BoostVelocity;
             }
             else
             {
+                audioSource.PlayOneShot(BadWaveSound);
                 CurrentSpeed = 0f;
             }
 
