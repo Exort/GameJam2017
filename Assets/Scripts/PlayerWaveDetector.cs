@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlayerWaveDetector : MonoBehaviour
 {
-    private float startY;
     private Wave currentWave;
 
     private Rigidbody2D myRigidBody;
@@ -65,11 +64,14 @@ public class PlayerWaveDetector : MonoBehaviour
             float step = 0f;
             float deltaY = GetDeltaY(currentWave, ref step);
 
+            float startY = transform.position.y;
+
             playerBody.position = new Vector2(playerBody.position.x, startY + deltaY);
 
             if ((waveSign < 0 && step > 1f) || (waveSign > 0 && step < 0f))
             {
-                Debug.Log("Leaving wave");
+             //   Debug.Log("Leaving wave");
+
                 playerBody.position = new Vector2(playerBody.position.x, transform.position.y);
 
                 currentWave = null;
@@ -117,9 +119,7 @@ public class PlayerWaveDetector : MonoBehaviour
 
             currentWave = wave;
 
-            startY = playerBody.position.y;
-
-            Debug.Log("Entering wave");
+            //Debug.Log("Entering wave");
 
             var handler = EnteredWave;
             if (handler != null)
